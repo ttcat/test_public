@@ -154,7 +154,7 @@ window.DTL_EN = [
   { sel: '#cadence .cadence-cell:nth-of-type(1) .cadence-big', text: 'Monthly' },
   { sel: '#cadence .cadence-cell:nth-of-type(1) .cadence-list', html: 'Applications open · share sessions<br>Published case studies' },
   { sel: '#cadence .cadence-cell:nth-of-type(2) .cadence-big', text: 'Quarterly' },
-  { sel: '#cadence .cadence-cell:nth-of-type(2) .cadence-list', html: 'Review outcomes, tune the program rules<br>MVP recognition' },
+  { sel: '#cadence .cadence-cell:nth-of-type(2) .cadence-list', html: 'Review outcomes, revise the award program<br>MVP recognition' },
   { sel: '#cadence .cadence-cell:nth-of-type(3) .cadence-big', text: 'Annually' },
   { sel: '#cadence .cadence-cell:nth-of-type(3) .cadence-list', html: 'Pioneer awards ceremony<br>Year-end retrospective' },
 
