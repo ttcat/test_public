@@ -44,6 +44,11 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 html { scroll-behavior: smooth; }
+html, body { overflow-x: hidden; max-width: 100%; }
+h1, h2, h3, h4, p, div, a, span, li {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
 
 body {
   font-family: var(--font);
@@ -171,6 +176,31 @@ body {
   color: var(--text);
   background: rgba(255, 255, 255, 0.06);
 }
+.lang-toggle {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  letter-spacing: 0.02em;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.lang-toggle:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.08);
+}
+.lang-toggle .lt-sep { color: var(--text-4); font-weight: 400; }
+.lang-toggle .lt-zh { color: var(--text); }
+.lang-toggle .lt-en { color: var(--text-3); }
+html[data-lang="en"] .lang-toggle .lt-zh { color: var(--text-3); }
+html[data-lang="en"] .lang-toggle .lt-en { color: var(--text); }
 
 /* ============ HERO ============ */
 .hero {
@@ -203,11 +233,18 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(56px, 9vw, 128px);
+  font-size: clamp(48px, 8.5vw, 112px);
   font-weight: 800;
-  line-height: 0.95;
+  line-height: 1.0;
   letter-spacing: -0.04em;
   margin-bottom: 28px;
+  text-wrap: balance;
+  max-width: 14ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-title .line {
+  display: block;
 }
 .hero-title .gradient {
   background: var(--grad-primary);
@@ -1072,8 +1109,25 @@ body {
   .hero-title { font-size: 56px; }
   .principles { grid-template-columns: 1fr; }
   .level-grid { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
-  .nav { padding: 6px 16px; }
+  .nav { padding: 6px 16px; padding-right: 6px; overflow: hidden; }
+  .nav-links {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+    min-width: 0;
+    mask-image: linear-gradient(to right, black 88%, transparent 100%);
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { padding: 6px 10px; flex-shrink: 0; }
+  /* Disable expensive bg animations + blurs on mobile to fix perf */
+  .bg::before, .bg::after, .bg-third {
+    animation: none !important;
+    filter: blur(80px);
+    opacity: 0.18;
+  }
+  .bg-grain { display: none; }
 }
 
 /* ============ AI SERVICES ============ */
@@ -1094,11 +1148,6 @@ body {
   overflow: hidden;
   margin-top: 56px;
 }
-a.service-cell {
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-}
 .service-cell {
   background: var(--surface-1);
   padding: 28px 24px;
@@ -1107,8 +1156,27 @@ a.service-cell {
   grid-template-rows: auto auto 1fr;
   gap: 8px;
   min-height: 172px;
+  position: relative;
 }
 .service-cell:hover { background: var(--surface-2); }
+.service-link {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.service-link:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.06);
+}
+.service-link svg { width: 14px; height: 14px; }
 .service-cat {
   font-family: var(--font-en);
   font-size: 11px;
@@ -1154,6 +1222,152 @@ a.service-cell {
 @media (max-width: 540px) {
   .services-grid { grid-template-columns: 1fr; }
 }
+
+/* ============ POLICY ============ */
+.policy-wrap {
+  margin-top: 56px;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+}
+.policy-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.policy-pillar {
+  background: var(--surface-1);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.policy-pillar-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.policy-pillar-icon svg { width: 18px; height: 18px; }
+.policy-pillar.p-security .policy-pillar-icon { color: var(--neon-pink); }
+.policy-pillar.p-transparency .policy-pillar-icon { color: var(--neon-cyan); }
+.policy-pillar.p-accountability .policy-pillar-icon { color: var(--neon-amber); }
+.policy-pillar-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.policy-pillar-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.policy-pillar-tag {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.policy-expand {
+  background: var(--surface-1);
+  border-top: 1px solid var(--border);
+}
+.policy-expand summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 22px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  transition: background 0.2s ease;
+}
+.policy-expand summary::-webkit-details-marker { display: none; }
+.policy-expand summary:hover { background: var(--surface-2); }
+.policy-expand summary .pe-chevron {
+  transition: transform 0.3s ease;
+  color: var(--text-3);
+}
+.policy-expand[open] summary .pe-chevron { transform: rotate(180deg); }
+.policy-expand[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+.policy-full {
+  padding: 8px 32px 40px;
+  max-height: 70vh;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+.policy-full h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 28px 0 10px;
+  letter-spacing: -0.005em;
+}
+.policy-full h3:first-child { margin-top: 16px; }
+.policy-full h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 18px 0 8px;
+  font-family: var(--font-en);
+}
+.policy-full p { margin: 0 0 10px; }
+.policy-full ul, .policy-full ol { margin: 0 0 12px; padding-left: 20px; }
+.policy-full li { margin-bottom: 6px; }
+.policy-full strong { color: var(--text); font-weight: 600; }
+.policy-full hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
+}
+.policy-full table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 16px;
+  font-size: 13px;
+}
+.policy-full th, .policy-full td {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+.policy-full th {
+  background: rgba(255,255,255,0.03);
+  font-weight: 600;
+  color: var(--text);
+}
+.policy-full .lang-tag {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-4);
+  margin-right: 6px;
+}
+@media (max-width: 960px) {
+  .policy-pillars { grid-template-columns: 1fr; }
+  .policy-expand summary { padding: 18px 20px; font-size: 14px; }
+  .policy-full { padding: 8px 20px 28px; }
+  .policy-pillar { padding: 24px 20px; }
+}
 </style>
 </head>
 <body>
@@ -1165,13 +1379,17 @@ a.service-cell {
 
 <!-- NAV -->
 <nav class="nav">
-  <span class="nav-brand">Doublethink Lab</span>
-  <span class="nav-dot">·</span>
   <div class="nav-links">
-    <a href="#levels">關卡</a>
-    <a href="#culture">文化</a>
-    <a href="#services">開始</a>
+    <a href="#levels" data-en="Levels">關卡</a>
+    <a href="#culture" data-en="Culture">文化</a>
+    <a href="#policy" data-en="Policy">規則</a>
+    <a href="#services" data-en="Start">開始</a>
   </div>
+  <button class="lang-toggle" id="langToggle" aria-label="Toggle language">
+    <span class="lt-zh">中</span>
+    <span class="lt-sep">/</span>
+    <span class="lt-en">EN</span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1181,7 +1399,7 @@ a.service-cell {
       <span class="hero-eyebrow-dot"></span>
       AI 神隊友計畫
     </div>
-    <h1 class="hero-title">
+    <h1 class="hero-title" data-en-html="Play with AI.<br><span class=&quot;gradient&quot;>Mess around</span>.">
       和 AI 一起<br><span class="gradient">做點好玩的</span>。
     </h1>
     <p class="hero-sub">
@@ -1198,16 +1416,16 @@ a.service-cell {
     <div class="quote-wrap">
       <div class="quote-label">TTCAT</div>
       <div class="quote-text">
-        <p>AI 正在改變這個世界上每一種工作的樣貌。</p>
-        <p>在 AI 科技衝擊的當下，有充分的資源、毫無後顧之憂的去玩、去練習，才能把 AI 變成自己順手的工具——不管是用在工作、研究、副業，還是自己生活裡的一件事。</p>
-        <p>我希望 DTL 的每一位夥伴，都能夠在這份工作中得到能力的提升和成長。組織將透過這個計劃作為你的後盾，提供資源、分享的舞台，讓大家一起「玩」得開心。</p>
+        <p>AI 正在改變這個世界上許多工作的樣貌，也包含我們的這個行業。</p>
+        <p>在這個科技衝擊的當下，只有擁有充分的資源、毫無後顧之憂的去玩、去練習，才有機會把 AI 變成自己順手的工具——不管是用在工作、研究、副業、遊戲，還是用來改善自己日常生活的一些事。</p>
+        <p>我們一直以來都希望 DTL 的每一位夥伴，都能夠盡可能在這份工作中提升能力和成長。組織將透過這個計劃作為你的後盾，提供資源、舞台，透過互相分享的機會，大家一起學習、一起玩得開心。</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- PRINCIPLES -->
-<section class="section">
+<section class="section" id="principles">
   <div class="container reveal">
     <div class="section-eyebrow">Spirit</div>
     <h2 class="section-title">一種精神,<br>四個面向。</h2>
@@ -1219,28 +1437,28 @@ a.service-cell {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
         <h3 class="principle-title">做真的事</h3>
-        <p class="principle-body">補助嘗試，獎勵成果。</p>
+        <p class="principle-body">補助探索 AI 應用與嘗試，獎勵成果。</p>
       </div>
       <div class="principle">
         <div class="principle-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg>
         </div>
         <h3 class="principle-title">分享出來</h3>
-        <p class="principle-body">好的方法要讓團隊一起受益。</p>
+        <p class="principle-body">好的方法讓團隊一起受益，拿更多獎勵。</p>
       </div>
       <div class="principle">
         <div class="principle-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
         </div>
         <h3 class="principle-title">允許失敗</h3>
-        <p class="principle-body">踩雷經驗也是貢獻，願意分享就是「最好」。</p>
+        <p class="principle-body">踩雷經驗也是貢獻，願意分享的經驗就是「最好」的經驗。</p>
       </div>
       <div class="principle">
         <div class="principle-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
         </div>
         <h3 class="principle-title">有料大賞</h3>
-        <p class="principle-body">真正有價值的貢獻會被看見，也會被獎勵。</p>
+        <p class="principle-body">真正有價值的貢獻會被看見，也會得到更多獎勵。</p>
       </div>
     </div>
   </div>
@@ -1315,7 +1533,7 @@ a.service-cell {
           <div class="freedom-label">最重要的事</div>
           <h4 class="freedom-title">拿來做什麼都可以。</h4>
           <p class="freedom-body">
-            三個月工具補助，用多少，補多少。不一定要用在工作。做 side project、做動畫影片、寫小說、做遊戲、學語言、幫自己算報稅、排行程，或想一口氣嘗試多套工具？通通 OK！我們買單。我們相信：你敢玩，才會真的能學會用。
+            一次最多三個月的 AI 探索補助，用多少，補多少。不一定要用在工作。做 side project、做動畫影片、寫小說、做遊戲、學語言、幫自己算報稅、排行程，或想一口氣嘗試多套工具？通通 OK！我們買單。我們相信：你敢玩，才會真的能學會用。
           </p>
           <div class="freedom-tags">
             <span class="freedom-tag">做遊戲</span>
@@ -1381,11 +1599,11 @@ a.service-cell {
           </div>
         </div>
         <div class="ld-field">
-          <div class="ld-field-label">形式 · 擇一</div>
+          <div class="ld-field-label">形式 · 一加一</div>
           <div class="ld-field-body">
             全組織線上分享會
 ＋
-部門分享 · 教學文件 · 網頁或簡報 · 錄影 Demo · 案例文章
+教學文件 · 網頁或簡報 · 錄影 Demo · 案例文章
 
 
           </div>
@@ -1554,7 +1772,7 @@ a.service-cell {
 </section>
 
 <!-- REVIEW -->
-<section class="section">
+<section class="section" id="judges">
   <div class="container reveal">
     <div class="section-eyebrow">Review</div>
     <h2 class="section-title">誰負責評審？</h2>
@@ -1647,7 +1865,7 @@ a.service-cell {
 </section>
 
 <!-- CADENCE -->
-<section class="section">
+<section class="section" id="cadence">
   <div class="container reveal">
     <div class="section-eyebrow">Rhythm</div>
     <h2 class="section-title">這個計畫的節奏。</h2>
@@ -1681,6 +1899,111 @@ a.service-cell {
   </div>
 </section>
 
+
+<!-- POLICY -->
+<section class="section" id="policy">
+  <div class="container reveal">
+    <div class="section-eyebrow">Policy</div>
+    <h2 class="section-title">玩之前，<br>先讀這個。</h2>
+    <p class="section-sub">生成式 AI 的使用規則——玩得開心，也玩得負責。</p>
+
+    <div class="policy-wrap">
+      <div class="policy-pillars">
+        <div class="policy-pillar p-security">
+          <div class="policy-pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/></svg>
+          </div>
+          <div class="policy-pillar-tag">Security</div>
+          <div class="policy-pillar-title">資安紅線</div>
+          <div class="policy-pillar-body">絕不輸入敏感或機密資訊。中國來源 / 中國營運的 AI 服務一律禁用。</div>
+        </div>
+        <div class="policy-pillar p-accountability">
+          <div class="policy-pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div class="policy-pillar-tag">Accountability</div>
+          <div class="policy-pillar-title">你負責，不是模型</div>
+          <div class="policy-pillar-body">AI 產出的內容，責任都在使用的人。把 AI 當不可靠的初階助理——產出是草稿，不是成品。</div>
+        </div>
+        <div class="policy-pillar p-transparency">
+          <div class="policy-pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/></svg>
+          </div>
+          <div class="policy-pillar-tag">Transparency</div>
+          <div class="policy-pillar-title">誠實揭露用法</div>
+          <div class="policy-pillar-body">對內送審時具體說明 AI 怎麼用——草擬？翻譯？分析？讓審稿者能校準檢查強度。</div>
+        </div>
+      </div>
+      <details class="policy-expand">
+        <summary>
+          <span>展開完整政策（7 章）</span>
+          <svg class="pe-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="policy-full" id="policy-full-body">
+          <h3>概述 Overview</h3>
+          <p>Doublethink Lab 鼓勵同仁使用生成式 AI（GAI）工具來提升工作效率與品質。但 GAI 也帶來實際的風險——包括準確性、資訊安全、合作對象的安全，以及組織信譽。本政策規範所有同仁在工作上使用 GAI 時必須遵守的規則，並會隨工具、風險與最佳實務持續更新。</p>
+
+          <h3>適用範圍 Scope</h3>
+          <p>適用於 Doublethink Lab 所有層級人員，包括正職、兼職、約聘、實習生及志工。凡工作相關的 GAI 使用行為，無論使用組織配發設備或個人設備，皆適用本政策。</p>
+
+          <hr>
+
+          <h3>1 · 公平性與偏見</h3>
+          <p><strong>1.1</strong> 使用 GAI 處理任務前，應評估模型偏見是否可能導致不公平的結果。若有此風險，應採取具體措施降低偏見，否則不應以 GAI 處理該任務。</p>
+          <h4>為什麼重要</h4>
+          <p>GAI 模型以人類產生的資料訓練，會繼承資料中的偏見——包括性別、族裔、國籍、年齡等受保護特徵的偏見。例如用 GAI 篩選或評分求職者履歷，可能產生系統性不公平的結果；用 GAI 評估資料來源或人物的可信度，也可能嵌入偏見，影響研究的完整性。</p>
+          <h3>2 · 個人責任</h3>
+          <p><strong>2.1</strong> 使用者對自己所採用、發布或轉發的 GAI 產出內容負有個人責任，包括準確性、事實性、語氣與適切性。</p>
+          <h4>為什麼重要</h4>
+          <p>不要把判斷外包給 GAI。若你用 GAI 草擬寄給外部夥伴的郵件而內容有事實錯誤，責任在你；若你用 GAI 協助撰寫報告，模型產生幻覺事實、捏造引註或虛構引言，是你要負責抓出來。使用任何 GAI 產出前，務必<strong>閱讀、查證、修改</strong>。請把 GAI 輸出視為一位不可靠的初階助理所寫的初稿，而非成品。</p>
+
+          <h3>3 · 資訊安全與隱私</h3>
+          <p><strong>3.1 嚴禁將任何敏感或機密資訊輸入 GAI 模型。</strong></p>
+          <p>典型敏感資訊包括：與我們合作對抗中共惡意影響力、可能遭受跨國鎮壓的合作夥伴之姓名或個人資訊；以及敏感的組織內部資料（如人資事件）。<strong>請把輸入模型的任何內容，都視為中共眼中的黃金情報。</strong>若不確定某資訊是否屬於敏感資料，請詢問主管。</p>
+
+          <h3>4 · 透明揭露</h3>
+          <p><strong>4.1</strong> 對內應清楚、具體地揭露 GAI 的使用情況。</p>
+          <ul>
+            <li>送審報告時明確告知研究主管 GAI 是如何被使用的——例如「以 GAI 草擬第三節，再由本人查證與編輯」，或「以 GAI 翻譯原始中文資料」。</li>
+            <li>不得在未揭露情況下，將 GAI 產出的內容充作個人原創。涵蓋文字、程式碼、分析、摘要、翻譯與圖像。</li>
+            <li>揭露有助於審稿者調整審閱標準——例如更仔細檢查幻覺內容、捏造引註或文風不一致。</li>
+          </ul>
+          <p><strong>4.2</strong> 對外發布的內容應依研究主管或傳播團隊的指引，決定是否及如何向外部揭露 GAI 的使用。</p>
+
+          <h3>5 · 核准廠商</h3>
+          <p>重點不在模型是否為開源，而是<strong>你使用該服務時，資料會傳到哪裡</strong>。雲端服務會把提示詞送到廠商伺服器，廠商的司法管轄區與資料處理實務決定風險高低。</p>
+
+          <h4>5.1 禁用</h4>
+          <p>任何工作用途皆不得使用總部設於中國、從中國營運或與中國有重大關聯的雲端 GAI 服務（包括資料經中國司法管轄區——例如香港——傳輸的服務）。送入這類服務的資料受中國司法管轄，可能依法被要求交予中國國家機關。</p>
+          <p><strong>例子：</strong>DeepSeek、Kimi / Moonshot AI、百度文心一言、阿里 Qwen 雲端服務（通義千問）、字節跳動豆包、騰訊混元、智譜 ChatGLM 雲端服務。</p>
+          <p>將開源權重模型完全在 DTL 掌控的硬體上執行、且無任何網路連線流向中國關聯服務，本條並不自動禁止，但處理工作資料前須事先經政策負責人核准。</p>
+
+          <h4>5.2 核准</h4>
+          <p>核准名單上的廠商皆持有公認的國際資安與合規認證（如 ISO/IEC 27001、SOC 2 Type II、HIPAA、FedRAMP）：</p>
+          <ul>
+            <li><strong>Anthropic</strong> — Claude Enterprise / Team / API</li>
+            <li><strong>OpenAI</strong> — ChatGPT Team / Enterprise / API</li>
+            <li><strong>Google</strong> — Gemini（Workspace 方案）/ Vertex AI</li>
+            <li><strong>Microsoft</strong> — Copilot for M365 / Azure OpenAI</li>
+          </ul>
+          <p>其他廠商請先提報主管與政策負責人審查後再使用。</p>
+
+          <h3>6 · 智慧財產與內容</h3>
+          <p><strong>6.1</strong> 不得將第三方受版權保護的完整內容輸入公開的 GAI 服務，除非該內容已為公開可自由使用的素材。</p>
+          <p><strong>6.2</strong> 對於 GAI 生成的圖像、影片、音樂，發布前需確認未侵犯第三方權利。對外使用時須揭露「AI 生成」。</p>
+
+          <h3>7 · 違規處理</h3>
+          <p>違反本政策可能導致：追回本計劃的獎金、內部紀律處分，或——若涉及重大資安事件——循正式人資流程處理。若發現自己或他人無意間違規，請<strong>盡速通報政策負責人</strong>，早一步處理永遠比掩蓋風險小。</p>
+
+          <hr>
+          <p style="color: var(--text-3); font-size: 12px;">本政策為動態文件，將隨工具、風險與最佳實務演變持續更新。如有疑問，聯絡政策負責人或 <strong>TTCAT</strong>。</p>
+
+</div>
+      </details>
+    </div>
+  </div>
+</section>
+
 <!-- CLOSING -->
 <!-- AI SERVICES -->
 <section class="section" id="services">
@@ -1692,113 +2015,113 @@ a.service-cell {
     </p>
 
     <div class="services-grid">
-      <a class="service-cell c-chat" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-chat"><a class="service-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" aria-label="ChatGPT"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Chat / LLM</div>
         <div class="service-name">ChatGPT</div>
-        <div class="service-desc">對話、寫作、分析、寫程式的全能入口。</a>
+        <div class="service-desc">對話、寫作、分析、寫程式的全能入口。</div>
       </div>
-      <a class="service-cell c-chat" href="https://claude.ai" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-chat"><a class="service-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer" aria-label="Claude"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Chat / LLM</div>
         <div class="service-name">Claude</div>
-        <div class="service-desc">長文理解、推理、寫程式特別強。</a>
+        <div class="service-desc">長文理解、推理、寫程式特別強。</div>
       </div>
-      <a class="service-cell c-chat" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-chat"><a class="service-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" aria-label="Gemini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Chat / LLM</div>
         <div class="service-name">Gemini</div>
-        <div class="service-desc">整合 Google 生態、搜尋與多模態。</a>
+        <div class="service-desc">整合 Google 生態、搜尋與多模態。</div>
       </div>
-      <a class="service-cell c-chat" href="https://grok.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-chat"><a class="service-link" href="https://grok.com" target="_blank" rel="noopener noreferrer" aria-label="Grok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Chat / LLM</div>
         <div class="service-name">Grok</div>
-        <div class="service-desc">即時資訊、X 整合、愛講真話。</a>
+        <div class="service-desc">即時資訊、X 整合、愛講真話。</div>
       </div>
 
-      <a class="service-cell c-image" href="https://www.midjourney.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-image"><a class="service-link" href="https://www.midjourney.com" target="_blank" rel="noopener noreferrer" aria-label="Midjourney"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Image</div>
         <div class="service-name">Midjourney</div>
-        <div class="service-desc">藝術級圖像生成，風格最多元。</a>
+        <div class="service-desc">藝術級圖像生成，風格最多元。</div>
       </div>
-      <a class="service-cell c-image" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-image"><a class="service-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" aria-label="Nano Banana"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Image</div>
         <div class="service-name">Nano Banana</div>
-        <div class="service-desc">Google 出的超快編輯，改圖、合成一鍵搞定。</a>
+        <div class="service-desc">Google 出的超快編輯，改圖、合成一鍵搞定。</div>
       </div>
 
-      <a class="service-cell c-video" href="https://sora.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-video"><a class="service-link" href="https://sora.com" target="_blank" rel="noopener noreferrer" aria-label="Sora"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Video</div>
         <div class="service-name">Sora</div>
-        <div class="service-desc">OpenAI 影片生成，長鏡頭、真實感強。</a>
+        <div class="service-desc">OpenAI 影片生成，長鏡頭、真實感強。</div>
       </div>
-      <a class="service-cell c-video" href="https://deepmind.google/models/veo/" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-video"><a class="service-link" href="https://deepmind.google/models/veo/" target="_blank" rel="noopener noreferrer" aria-label="Veo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Video</div>
         <div class="service-name">Veo</div>
-        <div class="service-desc">Google 高畫質影片生成。</a>
+        <div class="service-desc">Google 高畫質影片生成。</div>
       </div>
-      <a class="service-cell c-video" href="https://runwayml.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-video"><a class="service-link" href="https://runwayml.com" target="_blank" rel="noopener noreferrer" aria-label="Runway"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Video</div>
         <div class="service-name">Runway</div>
-        <div class="service-desc">影片編輯、特效、去背、動態圖。</a>
+        <div class="service-desc">影片編輯、特效、去背、動態圖。</div>
       </div>
-      <a class="service-cell c-video" href="https://higgsfield.ai" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-video"><a class="service-link" href="https://higgsfield.ai" target="_blank" rel="noopener noreferrer" aria-label="Higgsfield"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Video</div>
         <div class="service-name">Higgsfield</div>
-        <div class="service-desc">電影感鏡頭運動、創作者導向的影片生成。</a>
+        <div class="service-desc">電影感鏡頭運動、創作者導向的影片生成。</div>
       </div>
 
-      <a class="service-cell c-music" href="https://suno.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-music"><a class="service-link" href="https://suno.com" target="_blank" rel="noopener noreferrer" aria-label="Suno"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Music</div>
         <div class="service-name">Suno</div>
-        <div class="service-desc">打字就能生一首完整的歌，含人聲。</a>
+        <div class="service-desc">打字就能生一首完整的歌，含人聲。</div>
       </div>
-      <a class="service-cell c-music" href="https://www.udio.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-music"><a class="service-link" href="https://www.udio.com" target="_blank" rel="noopener noreferrer" aria-label="Udio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Music</div>
         <div class="service-name">Udio</div>
-        <div class="service-desc">高品質音樂生成，風格混搭細緻。</a>
+        <div class="service-desc">高品質音樂生成，風格混搭細緻。</div>
       </div>
 
-      <a class="service-cell c-audio" href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-audio"><a class="service-link" href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer" aria-label="ElevenLabs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Voice</div>
         <div class="service-name">ElevenLabs</div>
-        <div class="service-desc">逼真的配音、語音克隆、多語言。</a>
+        <div class="service-desc">逼真的配音、語音克隆、多語言。</div>
       </div>
-      <a class="service-cell c-audio" href="https://notebooklm.google.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-audio"><a class="service-link" href="https://notebooklm.google.com" target="_blank" rel="noopener noreferrer" aria-label="NotebookLM"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Audio</div>
         <div class="service-name">NotebookLM</div>
-        <div class="service-desc">把任何資料變成 podcast，讀書神器。</a>
+        <div class="service-desc">把任何資料變成 podcast，讀書神器。</div>
       </div>
 
-      <a class="service-cell c-code" href="https://cursor.com" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-code"><a class="service-link" href="https://cursor.com" target="_blank" rel="noopener noreferrer" aria-label="Cursor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Code</div>
         <div class="service-name">Cursor</div>
-        <div class="service-desc">AI-native 編輯器，寫程式效率翻倍。</a>
+        <div class="service-desc">AI-native 編輯器，寫程式效率翻倍。</div>
       </div>
-      <a class="service-cell c-code" href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-code"><a class="service-link" href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener noreferrer" aria-label="Claude Code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Code</div>
         <div class="service-name">Claude Code</div>
-        <div class="service-desc">終端機裡的 agentic coding，改整個 repo。</a>
+        <div class="service-desc">終端機裡的 agentic coding，改整個 repo。</div>
       </div>
-      <a class="service-cell c-code" href="https://lovable.dev" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-code"><a class="service-link" href="https://lovable.dev" target="_blank" rel="noopener noreferrer" aria-label="Lovable"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">No-code</div>
         <div class="service-name">Lovable</div>
-        <div class="service-desc">一句話做一個完整網站或 app。</a>
+        <div class="service-desc">一句話做一個完整網站或 app。</div>
       </div>
 
-      <a class="service-cell c-design" href="https://www.figma.com/make/" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-design"><a class="service-link" href="https://www.figma.com/make/" target="_blank" rel="noopener noreferrer" aria-label="Figma Make"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Design</div>
         <div class="service-name">Figma Make</div>
-        <div class="service-desc">Figma 內建 AI，設計自動出 UI。</a>
+        <div class="service-desc">Figma 內建 AI，設計自動出 UI。</div>
       </div>
 
-      <a class="service-cell c-research" href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-research"><a class="service-link" href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" aria-label="Perplexity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Research</div>
         <div class="service-name">Perplexity</div>
-        <div class="service-desc">有引用的 AI 搜尋，研究、查資料首選。</a>
+        <div class="service-desc">有引用的 AI 搜尋，研究、查資料首選。</div>
       </div>
 
-      <a class="service-cell c-agent" href="https://devin.ai" target="_blank" rel="noopener noreferrer">
+      <div class="service-cell c-agent"><a class="service-link" href="https://devin.ai" target="_blank" rel="noopener noreferrer" aria-label="Devin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
         <div class="service-cat">Agent</div>
         <div class="service-name">Devin</div>
-        <div class="service-desc">自主完成整個任務的 AI software engineer。</a>
+        <div class="service-desc">自主完成整個任務的 AI software engineer。</div>
       </div>
     </div>
 
@@ -1824,6 +2147,7 @@ a.service-cell {
   <span>AI Teammate Program · 2026</span>
 </footer>
 
+<script src="en-translations.js"></script>
 <script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1834,6 +2158,52 @@ a.service-cell {
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ============ LANGUAGE TOGGLE ============
+(function() {
+  const root = document.documentElement;
+  const KEY = 'dtl-ai-lang';
+  const stored = localStorage.getItem(KEY);
+  const browser = (navigator.language || 'zh').toLowerCase();
+  const initial = stored || (browser.startsWith('zh') ? 'zh' : 'en');
+
+  function applyLang(lang) {
+    root.setAttribute('data-lang', lang);
+    root.setAttribute('lang', lang === 'en' ? 'en' : 'zh-Hant');
+
+    // Use window.DTL_EN array of { sel, text?, html? }
+    if (window.DTL_EN) {
+      window.DTL_EN.forEach(entry => {
+        document.querySelectorAll(entry.sel).forEach(el => {
+          // Cache original zh content once
+          if (!el.hasAttribute('data-zh-cached')) {
+            if (entry.html !== undefined) el.setAttribute('data-zh-html', el.innerHTML);
+            else el.setAttribute('data-zh-text', el.textContent);
+            el.setAttribute('data-zh-cached', '1');
+          }
+          if (lang === 'en') {
+            if (entry.html !== undefined) el.innerHTML = entry.html;
+            else el.textContent = entry.text;
+          } else {
+            if (entry.html !== undefined) el.innerHTML = el.getAttribute('data-zh-html');
+            else el.textContent = el.getAttribute('data-zh-text');
+          }
+        });
+      });
+    }
+  }
+
+  applyLang(initial);
+
+  const btn = document.getElementById('langToggle');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+      localStorage.setItem(KEY, next);
+      applyLang(next);
+    });
+  }
+})();
 </script>
 
 </body>
