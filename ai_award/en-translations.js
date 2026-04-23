@@ -218,13 +218,12 @@ window.DTL_EN = [
   },
 
   // ============ SERVICES ============
-  { sel: '#services .section-title', html: 'More than ChatGPT, Gemini,<br>Claude, Grok.' },
-  { sel: '#services .services-intro', text: 'AI is moving fast — writing, images, video, music, code, agents, research all have their own tools. Here are 20 worth trying. Pick one and start playing.' },
+  { sel: '#services .section-title', html: 'More than ChatGPT,<br>Claude, Gemini.' },
+  { sel: '#services .services-intro', text: 'AI is moving fast — writing, images, video, music, code, agents, research all have their own tools. Here are 24 worth trying. Pick one and start playing.' },
   { sel: '#services .services-note', text: "This is just a starting point. If you've tried something else and liked it, propose it — we don't care about the brand, the org pays." },
   { sel: '.service-cell:has(a[aria-label="ChatGPT"]) .service-desc', text: 'All-in-one entry for chat, writing, analysis, and code.' },
   { sel: '.service-cell:has(a[aria-label="Claude"]) .service-desc', text: 'Strong at long-form reading, reasoning, and coding.' },
   { sel: '.service-cell:has(a[aria-label="Gemini"]) .service-desc', text: 'Integrated with Google, search, and multimodal input.' },
-  { sel: '.service-cell:has(a[aria-label="Grok"]) .service-desc', text: 'Real-time info, X integration, not afraid to be direct.' },
   { sel: '.service-cell:has(a[aria-label="Midjourney"]) .service-desc', text: 'Art-grade image generation with the widest stylistic range.' },
   { sel: '.service-cell:has(a[aria-label="Nano Banana"]) .service-desc', text: "Google's ultra-fast editor — edits, comps, one click." },
   { sel: '.service-cell:has(a[aria-label="Sora"]) .service-desc', text: "OpenAI's video model — long takes, high realism." },
@@ -237,10 +236,15 @@ window.DTL_EN = [
   { sel: '.service-cell:has(a[aria-label="NotebookLM"]) .service-desc', text: 'Turn any source material into a podcast. Reading superpower.' },
   { sel: '.service-cell:has(a[aria-label="Cursor"]) .service-desc', text: 'AI-native editor that doubles your coding speed.' },
   { sel: '.service-cell:has(a[aria-label="Claude Code"]) .service-desc', text: 'Agentic coding in your terminal. Refactor whole repos.' },
+  { sel: '.service-cell:has(a[aria-label="Kiro"]) .service-desc', text: "AWS's spec-driven AI IDE — structured, team-oriented coding." },
+  { sel: '.service-cell:has(a[aria-label="Replit"]) .service-desc', text: 'Cloud IDE + AI Agent — project setup to deploy, all in one place.' },
   { sel: '.service-cell:has(a[aria-label="Lovable"]) .service-desc', text: 'One sentence → a full website or app.' },
+  { sel: '.service-cell:has(a[aria-label="Bolt"]) .service-desc', text: 'Build a full-stack app in your browser, deploy in one click.' },
   { sel: '.service-cell:has(a[aria-label="Figma Make"]) .service-desc', text: 'Figma\u2019s built-in AI — designs generate real UI.' },
+  { sel: '.service-cell:has(a[aria-label="v0"]) .service-desc', text: "Vercel's prompt-to-React UI generator. Designers' favorite." },
+  { sel: '.service-cell:has(a[aria-label="Stitch"]) .service-desc', text: "Google's AI UI designer — prompts or sketches become mockups." },
   { sel: '.service-cell:has(a[aria-label="Perplexity"]) .service-desc', text: 'AI search with citations. First stop for research and lookups.' },
-  { sel: '.service-cell:has(a[aria-label="Devin"]) .service-desc', text: 'An autonomous AI software engineer that finishes entire tasks.' },
+  { sel: '.service-cell:has(a[aria-label="Claude Cowork"]) .service-desc', text: "Anthropic's desktop agent — operates your browser, organizes files, runs workflows." },
 
   // ============ CLOSING ============
   { sel: '.closing-headline', html: 'Play.<br><span class="gradient">That\'s how it starts.</span>' },
