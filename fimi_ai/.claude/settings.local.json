@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /Users/ttcat/Sites/test_public/fimi_ai remote -v)",
+      "Read(//Users/ttcat/Sites/test_public/**)",
+      "Bash(git ls-remote *)"
+    ]
+  }
+}

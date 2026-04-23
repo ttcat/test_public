@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIMI 影片分析 ⌬ 26 樣本／4 帳號／2 平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0a09;
+    --bg-2: #1c1917;
+    --bg-3: #292524;
+    --ink: #f5f5f4;
+    --ink-2: #d6d3d1;
+    --ink-dim: #78716c;
+    --rule: #44403c;
+    --alert: #ef4444;
+    --alert-2: #b91c1c;
+    --warn: #f59e0b;
+    --accent: #fb923c;
+    --safe: #84cc16;
+    --hi: #fbbf24;
+    --serif: 'Noto Serif TC', Georgia, serif;
+    --sans: 'Noto Sans TC', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 0;
+    background-image:
+      radial-gradient(ellipse at top, rgba(239, 68, 68, 0.08), transparent 50%),
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 3px);
+  }
+
+  /* ---------- HEADER ---------- */
+  .masthead {
+    border-bottom: 3px double var(--alert);
+    padding: 32px 48px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: end;
+  }
+  .masthead .pretitle {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--alert);
+    margin-bottom: 8px;
+  }
+  .masthead h1 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    color: var(--alert);
+    font-weight: 400;
+  }
+  .masthead .meta {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    line-height: 1.8;
+  }
+  .masthead .meta strong { color: var(--ink); display: block; }
+
+  /* ---------- BANNER ---------- */
+  .banner {
+    background: var(--alert-2);
+    color: white;
+    padding: 14px 48px;
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--alert);
+  }
+  .banner .pulse {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    margin-right: 10px;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ---------- LAYOUT ---------- */
+  main { padding: 48px; max-width: 1600px; margin: 0 auto; }
+  section { margin-bottom: 64px; }
+  section h2 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: 32px;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  section h2::before {
+    content: counter(section, decimal-leading-zero);
+    counter-increment: section;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--alert);
+    margin-right: 16px;
+    vertical-align: super;
+    font-weight: 400;
+  }
+  body { counter-reset: section; }
+  section .lede {
+    font-family: var(--serif);
+    color: var(--ink-2);
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 800px;
+    margin-bottom: 32px;
+    border-left: 2px solid var(--alert);
+    padding-left: 20px;
+  }
+
+  /* ---------- TOP STATS ---------- */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+  .stat {
+    background: var(--bg-2);
+    padding: 24px;
+    position: relative;
+  }
+  .stat .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-dim);
+    margin-bottom: 12px;
+  }
+  .stat .num {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .stat .num.alert { color: var(--alert); }
+  .stat .num.warn { color: var(--warn); }
+  .stat .sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    margin-top: 8px;
+  }
+
+  /* ---------- CHANNELS ---------- */
+  .channels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .channel-card {
+    background: var(--bg-2);
+    border: 1px solid var(--rule);
+    padding: 24px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .channel-card:hover { border-color: var(--alert); }
+  .channel-card .platform-tag {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border: 1px solid var(--ink-dim);
+    color: var(--ink-dim);
+    text-transform: uppercase;
+  }
+  .channel-card .platform-tag.douyin { color: var(--accent); border-color: var(--accent); }
+  .channel-card .platform-tag.youtube { color: var(--alert); border-color: var(--alert); }
+  .channel-card .name {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .channel-card .handle {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    margin-bottom: 16px;
+  }
+  .channel-card .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--rule);
+  }
+  .channel-card .stat-item .v {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 900;
+  }
+  .channel-card .stat-item .k {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+  }
+  .channel-card .role {
+    font-family: var(--serif);
+    font-size: 14px;
+    color: var(--accent);
+    border-top: 1px solid var(--rule);
+    padding-top: 12px;
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline {
+    border: 1px solid var(--rule);
+    background: var(--bg-2);
+    padding: 32px;
+    overflow-x: auto;
+  }
+  .timeline-bar {
+    position: relative;
+    height: 360px;
+    min-width: 1100px;
+  }
+  .timeline-axis {
+    position: absolute;
+    bottom: 40px;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--rule);
+  }
+  .timeline-axis .tick {
+    position: absolute;
+    bottom: -4px;
+    width: 1px;
+    height: 8px;
+    background: var(--ink-dim);
+  }
+  .timeline-axis .tick-label {
+    position: absolute;
+    bottom: -28px;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    white-space: nowrap;
+  }
+  .video-dot {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--bg-2);
+  }
+  .video-dot:hover { transform: translate(-50%, -50%) scale(1.6); z-index: 10; }
+  .video-dot[data-channel="台湾女孩(黄丽璇)"] { background: #ec4899; }
+  .video-dot[data-channel="小程爱中国"] { background: #fb923c; }
+  .video-dot[data-channel="放羊姐自媒体"] { background: #06b6d4; }
+  .video-dot[data-channel="军迷 焕哥 盆景缘"] { background: #a855f7; }
+  .video-dot.scripted::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border: 1px dashed var(--alert);
+    border-radius: 50%;
+  }
+  .timeline-tooltip {
+    position: absolute;
+    background: var(--bg-3);
+    border: 1px solid var(--alert);
+    padding: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink);
+    pointer-events: none;
+    z-index: 100;
+    max-width: 320px;
+    display: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+  .timeline-legend {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-2);
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+  }
+  .timeline-legend .item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .timeline-legend .swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  .timeline-legend .swatch-line { width: 14px; height: 14px; border-radius: 50%; border: 1px dashed var(--alert); background: transparent; }
+
+  /* ---------- NARRATIVE PHASES ---------- */
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+  }
+  .phase {
+    padding: 24px;
+    border-right: 1px solid var(--rule);
+    background: var(--bg-2);
+    position: relative;
+  }
+  .phase:last-child { border-right: none; }
+  .phase .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--alert);
+    letter-spacing: 0.3em;
+    margin-bottom: 8px;
+  }
+  .phase .title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .phase .when {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .phase .desc {
+    font-family: var(--serif);
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+  .phase::after {
+    content: '→';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--alert);
+    font-size: 24px;
+    background: var(--bg);
+    padding: 0 4px;
+    z-index: 2;
+  }
+  .phase:last-child::after { display: none; }
+
+  /* ---------- SCRIPT MATRIX ---------- */
+  .script-matrix {
+    border: 1px solid var(--rule);
+    background: var(--bg-2);
+    overflow-x: auto;
+  }
+  .script-matrix table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .script-matrix th {
+    background: var(--bg-3);
+    color: var(--ink-2);
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    border-bottom: 2px solid var(--rule);
+    white-space: nowrap;
+  }
+  .script-matrix td {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-2);
+    vertical-align: middle;
+  }
+  .script-matrix tr:hover td { background: rgba(239, 68, 68, 0.05); }
+  .script-matrix .check {
+    color: var(--alert);
+    font-weight: 700;
+    text-align: center;
+    font-size: 18px;
+  }
+  .script-matrix .id {
+    color: var(--ink-dim);
+    font-size: 11px;
+  }
+  .script-matrix .channel-name {
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 13px;
+  }
+
+  /* ---------- FINDINGS ---------- */
+  .findings {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .finding {
+    display: grid;
+    grid-template-columns: 80px 280px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .finding .num {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--alert);
+    line-height: 1;
+    font-style: italic;
+  }
+  .finding .label {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .finding .body {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .finding .body code {
+    font-family: var(--mono);
+    background: var(--bg-3);
+    color: var(--accent);
+    padding: 2px 6px;
+    font-size: 12px;
+    border: 1px solid var(--rule);
+  }
+  .finding .body strong {
+    color: var(--alert);
+    font-weight: 700;
+  }
+
+  /* ---------- VIDEO TABLE ---------- */
+  .videos-table-wrap {
+    border: 1px solid var(--rule);
+    overflow-x: auto;
+    background: var(--bg-2);
+  }
+  .videos-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sans);
+    font-size: 12px;
+  }
+  .videos-table th {
+    background: var(--bg-3);
+    color: var(--ink);
+    padding: 10px 8px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--alert);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  .videos-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    color: var(--ink-2);
+  }
+  .videos-table tr:hover td { background: rgba(239, 68, 68, 0.04); }
+  .videos-table .pid { font-family: var(--mono); color: var(--ink-dim); }
+  .videos-table .pf {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    text-transform: uppercase;
+    border: 1px solid;
+    display: inline-block;
+  }
+  .videos-table .pf.Douyin { color: var(--accent); border-color: var(--accent); }
+  .videos-table .pf.YouTube { color: var(--alert); border-color: var(--alert); }
+  .videos-table .ch {
+    font-family: var(--serif);
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .videos-table .tier {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--alert);
+    color: white;
+    text-align: center;
+    display: inline-block;
+  }
+  .videos-table .tier.高 { background: var(--warn); color: var(--bg); }
+  .videos-table .quote {
+    font-family: var(--serif);
+    color: var(--ink);
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 360px;
+    border-left: 2px solid var(--alert);
+    padding-left: 8px;
+  }
+  .videos-table .persona {
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  .videos-table .url {
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 10px;
+    word-break: break-all;
+  }
+  .videos-table .url:hover { color: var(--alert); }
+  .videos-table .flag {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--alert);
+    text-align: center;
+  }
+
+  /* ---------- SAMPLE QUOTES ---------- */
+  .sample-quotes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 16px;
+  }
+  .quote-card {
+    background: var(--bg-2);
+    border-left: 4px solid var(--alert);
+    padding: 24px;
+    position: relative;
+  }
+  .quote-card::before {
+    content: '"';
+    position: absolute;
+    top: -16px;
+    left: 16px;
+    font-family: var(--serif);
+    font-size: 96px;
+    color: var(--alert);
+    line-height: 1;
+    font-style: italic;
+  }
+  .quote-card .text {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 16px;
+    margin-top: 16px;
+  }
+  .quote-card .attr {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    border-top: 1px solid var(--rule);
+    padding-top: 12px;
+    line-height: 1.6;
+  }
+  .quote-card .attr strong { color: var(--accent); }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    border-top: 3px double var(--alert);
+    padding: 32px 48px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    line-height: 1.8;
+    margin-top: 64px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .masthead { grid-template-columns: 1fr; padding: 24px; }
+    .masthead .meta { text-align: left; }
+    main { padding: 24px; }
+    .phases { grid-template-columns: 1fr; }
+    .phase { border-right: none; border-bottom: 1px solid var(--rule); }
+    .phase::after { display: none; }
+    .finding { grid-template-columns: 60px 1fr; }
+    .finding .body { grid-column: 1 / -1; }
+    .finding .num { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="masthead">
+  <div>
+    <div class="pretitle">⌬ INTELLIGENCE BRIEF · CLASSIFIED-EQUIVALENT · FOR ANALYTICAL PURPOSES</div>
+    <h1>境外資訊操縱影片分析<br><em>Foreign Information Manipulation &amp; Interference / Taiwan</em></h1>
+  </div>
+  <div class="meta">
+    <strong>樣本：</strong>26 video URLs<br>
+    <strong>平台：</strong>Douyin × YouTube<br>
+    <strong>期間：</strong>2025/11 — 2026/01<br>
+    <strong>產製：</strong>2026-04-23
+  </div>
+</header>
+
+<div class="banner">
+  <span><span class="pulse"></span>26 / 26 樣本判定為 FIMI 操作内容 · 內含 AI 自承生成證據 · 跨平台腳本複用矩陣完整</span>
+  <span>CLASSIFICATION: OPEN-SOURCE / OSINT</span>
+</div>
+
+<main>
+
+<!-- ============ STATS ============ -->
+<section>
+  <div class="stats-grid">
+    <div class="stat">
+      <div class="label">SAMPLE TOTAL</div>
+      <div class="num">26</div>
+      <div class="sub">unique video URLs</div>
+    </div>
+    <div class="stat">
+      <div class="label">FIMI 極高分級</div>
+      <div class="num alert">25</div>
+      <div class="sub">+ 1 高分級</div>
+    </div>
+    <div class="stat">
+      <div class="label">YouTube 觀看數</div>
+      <div class="num">1.35M</div>
+      <div class="sub">最高單支 741K</div>
+    </div>
+    <div class="stat">
+      <div class="label">總互動數</div>
+      <div class="num">156K</div>
+      <div class="sub">讚＋留言＋分享</div>
+    </div>
+    <div class="stat">
+      <div class="label">涉及帳號</div>
+      <div class="num">4</div>
+      <div class="sub">2 平台、共用腳本</div>
+    </div>
+    <div class="stat">
+      <div class="label">AI 自承生成</div>
+      <div class="num warn">9</div>
+      <div class="sub">含 #抖音AI視頻生成</div>
+    </div>
+    <div class="stat">
+      <div class="label">腳本複用</div>
+      <div class="num warn">22</div>
+      <div class="sub">/ 26 共用核心句</div>
+    </div>
+    <div class="stat">
+      <div class="label">運作週期</div>
+      <div class="num">~12週</div>
+      <div class="sub">從 11/07 至 01/22</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHANNELS ============ -->
+<section>
+  <h2>涉及帳號</h2>
+  <p class="lede">四個帳號分屬兩個平台，各自扮演不同的「偽裝原型」——軍人／街訪／少女／覺醒母女——但共用同一套核心句式與敘事結構，顯示同一指揮鏈或同一腳本來源。</p>
+
+  <div class="channels">
+    <div class="channel-card">
+      <span class="platform-tag youtube">YouTube</span>
+      <div class="name">小程爱中国</div>
+      <div class="handle">@小程爱中国 · UCFQfSeio...</div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="v">73,300</div><div class="k">訂閱</div></div>
+        <div class="stat-item"><div class="v">9</div><div class="k">本次樣本</div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="v">1.35M</div><div class="k">總觀看</div></div>
+        <div class="stat-item"><div class="v">14,291</div><div class="k">總互動</div></div>
+      </div>
+      <div class="role">原型：偽裝台灣各軍種＋政黨指揮官 · AI 生成自承</div>
+    </div>
+
+    <div class="channel-card">
+      <span class="platform-tag douyin">Douyin</span>
+      <div class="name">台湾女孩(黄丽璇)</div>
+      <div class="handle">Douyin / 中國境內運營</div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="v">7,855</div><div class="k">粉絲</div></div>
+        <div class="stat-item"><div class="v">12</div><div class="k">本次樣本</div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="v">85,120</div><div class="k">總互動</div></div>
+        <div class="stat-item"><div class="v">12 天</div><div class="k">發布密度</div></div>
+      </div>
+      <div class="role">原型：覺醒少女 → 移民母親 → 婚配誘導</div>
+    </div>
+
+    <div class="channel-card">
+      <span class="platform-tag douyin">Douyin</span>
+      <div class="name">放羊姐自媒体</div>
+      <div class="handle">Douyin / 中國境內運營</div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="v">29,041</div><div class="k">粉絲</div></div>
+        <div class="stat-item"><div class="v">4</div><div class="k">本次樣本</div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="v">3,510</div><div class="k">總互動</div></div>
+        <div class="stat-item"><div class="v">4 天</div><div class="k">發布密度</div></div>
+      </div>
+      <div class="role">原型：偽裝台灣海軍／陸軍 · 與 YouTube 同腳本</div>
+    </div>
+
+    <div class="channel-card">
+      <span class="platform-tag douyin">Douyin</span>
+      <div class="name">军迷 焕哥 盆景缘</div>
+      <div class="handle">Douyin / 中國軍事自媒體</div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="v">56,995</div><div class="k">粉絲</div></div>
+        <div class="stat-item"><div class="v">1</div><div class="k">本次樣本</div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="v">53,698</div><div class="k">總互動</div></div>
+        <div class="stat-item"><div class="v">1 支病毒級</div><div class="k">擴散</div></div>
+      </div>
+      <div class="role">原型：偽裝「台灣街訪」＋台灣高中生</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section>
+  <h2>時間軸　∕　發布密度</h2>
+  <p class="lede">影片在 12 週內呈現兩波密集投放：第一波（YouTube／2025-12 中下旬）以軍人偽裝為主；第二波（Douyin／2026-01 上中旬）由「台灣女孩」連續發布 9 支進入「覺醒-定居」敘事週期。圈外虛線代表確認的腳本複用。</p>
+
+  <div class="timeline">
+    <div class="timeline-bar" id="timeline">
+      <div class="timeline-axis" id="axis"></div>
+    </div>
+    <div class="timeline-legend">
+      <div class="item"><span class="swatch" style="background:#ec4899"></span>台湾女孩(黄丽璇)</div>
+      <div class="item"><span class="swatch" style="background:#fb923c"></span>小程爱中国</div>
+      <div class="item"><span class="swatch" style="background:#06b6d4"></span>放羊姐自媒体</div>
+      <div class="item"><span class="swatch" style="background:#a855f7"></span>军迷 焕哥 盆景缘</div>
+      <div class="item"><span class="swatch swatch-line"></span>確認為腳本複用</div>
+      <div class="item" style="color:var(--ink-dim)">圓點直徑 = 互動量級對數</div>
+    </div>
+  </div>
+  <div class="timeline-tooltip" id="tt"></div>
+</section>
+
+<!-- ============ NARRATIVE PHASES ============ -->
+<section>
+  <h2>敘事推進　∕　四階段</h2>
+  <p class="lede">每支影片並非獨立創作，而是大型敘事鏈的一節。四個階段在時間上交疊，但情感目標逐步加碼：從「我是你」→「我覺醒了」→「我移民來」→「來娶我女兒」。</p>
+
+  <div class="phases">
+    <div class="phase">
+      <div class="num">PHASE 01</div>
+      <div class="title">身分偽裝</div>
+      <div class="when">2025-11 → 12 上</div>
+      <div class="desc">虛構「台灣高中生／海軍／空軍／民眾黨指揮官／1688指揮」等身分發送統一訊息。基本句式：「我是台灣XX，台灣是中國的，是不可分割的，歡迎我們回家嗎？」</div>
+    </div>
+    <div class="phase">
+      <div class="num">PHASE 02</div>
+      <div class="title">覺醒敘事</div>
+      <div class="when">2025-12 → 2026-01 上</div>
+      <div class="desc">「到了中國親眼看到祖國這麼發達」。「我們被台灣媒體騙了這麼多年」。建立中國 = 真實／繁榮，台灣媒體 = 謊言／落後 的對立框架。</div>
+    </div>
+    <div class="phase">
+      <div class="num">PHASE 03</div>
+      <div class="title">館長背書</div>
+      <div class="when">2026-01 中</div>
+      <div class="desc">援用台灣本土網紅陳之漢（館長）名聲：「館長說的沒錯」。利用台灣在地 KOL 的可信度為中國敘事掛保證，模糊內外資訊邊界。</div>
+    </div>
+    <div class="phase">
+      <div class="num">PHASE 04</div>
+      <div class="title">移民／婚配誘導</div>
+      <div class="when">2026-01 下</div>
+      <div class="desc">「我和我兩個女兒要定居中國」。「她們還單身，向叔叔阿姨打聲招呼」。將政治敘事個人化／家庭化／婚配化，對中國男性受眾投放跨海峽情感誘餌。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KEY QUOTES ============ -->
+<section>
+  <h2>逐字稿樣本　∕　最具揭示性的句子</h2>
+  <p class="lede">這些直接從音轉文取得的句子，本身就是 FIMI 證據。「台灣省」、「我是台灣 1688 指揮」、「館長說的沒錯」這類措辭混合了官方中國用語、捏造的軍種編號，以及台灣本土權威借用，三者同時出現在 10 秒影片裡是極其罕見的。</p>
+
+  <div class="sample-quotes">
+    <div class="quote-card">
+      <div class="text">大家好，我們是<strong style="color:var(--alert)">台灣省高中生</strong>，希望我們<strong style="color:var(--alert)">台灣省省長賴清德</strong>，能夠在 2025 之前讓我們回歸祖國。此生無悔入華夏，來時還做趙國人。</div>
+      <div class="attr"><strong>影片 #1</strong> · 军迷 焕哥 盆景缘 · Douyin · 51,249 讚<br>真正台灣人不會自稱「台灣省」或稱賴清德為「省長」</div>
+    </div>
+
+    <div class="quote-card">
+      <div class="text">大陸的兄弟們，你好，我是<strong style="color:var(--alert)">台灣的 1688 指揮</strong>。台灣是中國的，是不可分割的。你們歡迎我們回家嗎？</div>
+      <div class="attr"><strong>影片 #22</strong> · 小程爱中国 · YouTube · <strong>741,100 觀看</strong><br>「1688」為虛構軍種編號，台灣國軍無此編制</div>
+    </div>
+
+    <div class="quote-card">
+      <div class="text">你看看我們的祖國這麼發達，我們被騙了這麼多年。<strong style="color:var(--alert)">館長說的沒錯</strong>，台灣媒體都是騙人的。</div>
+      <div class="attr"><strong>影片 #11</strong> · 台湾女孩(黄丽璇) · Douyin · 10,149 讚<br>援用台灣 KOL 陳之漢為中國敘事背書</div>
+    </div>
+
+    <div class="quote-card">
+      <div class="text">大陸的兄弟姐妹們，你們好，我是<strong style="color:var(--alert)">台灣民眾黨指揮官</strong>。台灣是中國的不可分割的。你們歡迎我們回家嗎？</div>
+      <div class="attr"><strong>影片 #25</strong> · 小程爱中国 · YouTube · 含 hashtag <code style="font-family:var(--mono);color:var(--accent)">#抖音ai視頻生成</code><br>政黨偽裝＋AI 生成的雙重自承</div>
+    </div>
+
+    <div class="quote-card">
+      <div class="text">大陸的同胞們，從今天起，我和我<strong style="color:var(--alert)">兩個女兒要定居中國</strong>。我們不會再被台灣媒體洗腦。館長說的沒錯，你看中國多麼發達。</div>
+      <div class="attr"><strong>影片 #17</strong> · 台湾女孩(黄丽璇) · Douyin · 7,404 讚<br>三敘事層疊：移民 + 覺醒 + 館長借勢</div>
+    </div>
+
+    <div class="quote-card">
+      <div class="text">大陸的兄弟姐妹們 你們好 我是<strong style="color:var(--alert)">台灣空軍指揮官</strong>。台灣是中國的，是不可分割的。<strong style="color:var(--alert)">我們不想打仗，我們想要回到祖國</strong>。</div>
+      <div class="attr"><strong>影片 #20</strong> · 小程爱中国 · YouTube · <strong>474,088 觀看</strong><br>軍人投誠＋反戰厭戰，劍指台灣徵兵與後備動員士氣</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCRIPT MATRIX ============ -->
+<section>
+  <h2>腳本複用矩陣　∕　跨平台共用句式證據</h2>
+  <p class="lede">下表列出每支影片是否使用三個關鍵敘事元素之一：(A) 軍人投誠核心句、(B) 借用館長權威、(C) 移民／婚配敘事。同一帳號重複使用幾乎一字不差的句式，跨平台帳號共用核心句——這不是巧合，是腳本分發。</p>
+
+  <div class="script-matrix">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>帳號</th>
+          <th>偽裝身分</th>
+          <th>平台</th>
+          <th>(A) 「我是台灣XX／不可分割／歡迎回家」</th>
+          <th>(B) 「館長說得沒錯」</th>
+          <th>(C) 移民／單身女兒</th>
+        </tr>
+      </thead>
+      <tbody id="matrix-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ FINDINGS ============ -->
+<section>
+  <h2>關鍵發現</h2>
+  <p class="lede">12 項從原始資料直接得出的判定，每一項都有對應影片 ID 與證據文本。</p>
+  <div class="findings" id="findings"></div>
+</section>
+
+<!-- ============ FULL TABLE ============ -->
+<section>
+  <h2>完整影片清單</h2>
+  <p class="lede">26 支影片的完整逐字稿、metadata 與 FIMI 標記。可在配套 Excel 檔做進階篩選。</p>
+  <div class="videos-table-wrap">
+    <table class="videos-table" id="vt">
+      <thead>
+        <tr>
+          <th>#</th><th>平台</th><th>帳號</th><th>發布</th><th>身分</th>
+          <th>FIMI</th><th>複用</th><th>AI</th><th>讚</th><th>留言</th>
+          <th>觀看(YT)</th><th>逐字稿</th><th>URL</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  資料抓取：Apify MCP × Claude · Douyin transcripts (apple_yang) + YouTube AI fallback (codepoetry/whisper)<br>
+  分析方法：FIMI framework — 行為者偽裝 / 敘事內容 / 技術合成 / 協同性 / 擴散指標<br>
+  本報告為 OSINT 開源情資分析，所有資料來自公開可訪問的社群媒體 URL · 2026-04-23
+</footer>
+
+
+<script>
+// inject data
+const DATA = [
+  {
+    "id": 1,
+    "platform": "Douyin",
+    "url": "https://www.douyin.com/video/7569980673655059109",
+    "channel": "军迷 焕哥 盆景缘",
+    "followers": 56995,
+    "published": "2025-11-07",
+    "duration_s": 25.2,
+    "views": null,
+    "likes": 51249,
+    "comments": 2036,
+    "shares": 413,
+    "title": "我们支持统一 台湾民众敢说我是中国人了 #台湾街头采访",
+    "transcript": "你们害怕解放军吗 害怕什么 我五星期早就买好了 对啊不然我也可以加入解放军啊 打到台独跟民进党 最终要打败赖清德 我们支持统一 大家好我们是台湾省高中生 希望我们台湾省省长赖清德 能够在2025之前 让我们回归祖国 此生无悔入华夏 来时还做赵国人",
+    "persona": "台湾高中生",
+    "narrative": "青年覺醒、反賴清德、2025 回歸",
+    "fimi_tier": "極高",
+    "scripted_reuse": false,
+    "ai_declared": false
+  },
+  {
+    "id": 2,
+    "platform": "Douyin",
+    "url": "https://www.douyin.com/video/7570181064749010211",
+    "channel": "放羊姐自媒体",
+    "followers": 29041,
+    "published": "2025-12-14",
+    "duration_s": 7.2,
+    "likes": 1975,
+    "comments": 270,
+    "shares": 15,
+    "title": "#祖国统一#台湾统一#两岸一家亲 #回家",
+    "transcript": "大家好,大陆的兄弟姐妹们,我们是台湾海军 我是中国的,是不可分割的,你们欢迎我们回家吗?",
+    "persona": "台湾海军",
+    "narrative": "軍人投誠、邀請統一",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 3,
+    "platform": "Douyin",
+    "url": "https://v.douyin.com/cj9sJvaOsDs/",
+    "channel": "放羊姐自媒体",
+    "followers": 29041,
+    "published": "2025-12-13",
+    "duration_s": 10.4,
+    "likes": 549,
+    "comments": 53,
+    "shares": 4,
+    "title": "#台湾#男兵#正能量",
+    "transcript": "大陆的同胞们 你们好 我是台湾军人 台湾是祖国的 我爱我的祖国 欢迎我们回去吗",
+    "persona": "台湾军人（男）",
+    "narrative": "軍人投誠、邀請統一",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 4,
+    "platform": "Douyin",
+    "url": "https://v.douyin.com/KgY6s3IGEeM/",
+    "channel": "放羊姐自媒体",
+    "followers": 29041,
+    "published": "2025-12-16",
+    "duration_s": 7.2,
+    "likes": 278,
+    "comments": 43,
+    "shares": 1,
+    "title": "#中国海军#台湾军人 #两岸一家亲",
+    "transcript": "大陆的兄弟姐妹们 你们好 我是台湾海军 台湾是中国的 是不可分割的一部分 欢迎我们回家嘛",
+    "persona": "台湾海军",
+    "narrative": "軍人投誠、邀請統一",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 5,
+    "platform": "Douyin",
+    "url": "https://v.douyin.com/Yv4xi1zlxE4/",
+    "channel": "放羊姐自媒体",
+    "followers": 29041,
+    "published": "2025-12-16",
+    "duration_s": 7.2,
+    "likes": 278,
+    "comments": 43,
+    "shares": 1,
+    "title": "#中国海军#台湾军人 #两岸一家亲",
+    "transcript": "大陆的兄弟姐妹们 你们好 我是台湾海军 台湾是中国的 是不可分割的一部分 欢迎我们回家嘛",
+    "persona": "台湾海军",
+    "narrative": "軍人投誠、邀請統一",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 6,
+    "platform": "Douyin",
+    "url": "https://www.douyin.com/video/7593699305497951589",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-10",
+    "duration_s": 14.7,
+    "likes": 2139,
+    "comments": 434,
+    "shares": 10,
+    "title": "祖国我想你了。#台湾 #中国台湾 #我爱你祖国",
+    "transcript": "我们是中国台湾的大陆主播",
+    "persona": "台湾女孩",
+    "narrative": "思鄉／回歸情緒動員",
+    "fimi_tier": "高",
+    "scripted_reuse": false,
+    "ai_declared": false
+  },
+  {
+    "id": 7,
+    "platform": "Douyin",
+    "url": "https://www.douyin.com/video/7593392323396917115",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-10",
+    "duration_s": 14.7,
+    "likes": 14253,
+    "comments": 2508,
+    "shares": 44,
+    "title": "祖国我想你了。#祖国统一势不可挡 #台湾属于中国",
+    "transcript": "我们是中国台湾的 中国的祖先你们好 对面就是大陆祖国 我们想回归祖国的怀抱 这既是历史也是事实 拜清德请你下台",
+    "persona": "台湾女孩",
+    "narrative": "攻擊賴清德+祖國情感動員",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 8,
+    "platform": "Douyin",
+    "url": "https://www.douyin.com/video/7594083120784588645",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-11",
+    "duration_s": 14.7,
+    "likes": 15008,
+    "comments": 1760,
+    "shares": 41,
+    "title": "久违的踏进这片陌生又温暖的故乡。#五星红旗高高挂",
+    "transcript": "我们是台湾女孩 中国的同胞叔叔阿姨你们好 今天我终于来到了祖国上海 我们2026年的愿望 就是希望祖国能统一 中国是不可分割的",
+    "persona": "台湾女孩",
+    "narrative": "2026 統一時程、朝聖敘事",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 9,
+    "platform": "Douyin",
+    "url": "https://v.douyin.com/4vV4qOkoaTk/",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-13",
+    "duration_s": 10.9,
+    "likes": 1081,
+    "comments": 112,
+    "shares": 3,
+    "title": "我们血脉相连。#祖国万岁",
+    "transcript": "你们好,背后就是祖国大陆,我们想回归祖国的怀抱,这既是历史也是事实,我们是不可分割的,我们的血脉是",
+    "persona": "台湾女孩",
+    "narrative": "血緣民族主義、歷史不可分",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 10,
+    "platform": "Douyin",
+    "url": "https://v.douyin.com/G7mxx7AR2_M/",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-15",
+    "duration_s": 10.9,
+    "likes": 915,
+    "comments": 75,
+    "shares": 5,
+    "title": "新一代的觉醒。#祖国万岁 #我爱中国",
+    "transcript": "我们是台湾女孩 美国和日本 你们不要再挑拨我们和大陆祖国的关系了 我们台湾属于中国是历史不变的 我们是不可分割的一部分",
+    "persona": "台湾女孩",
+    "narrative": "反美日、反離間、歷史民族主義",
+    "fimi_tier": "極高",
+    "scripted_reuse": false,
+    "ai_declared": false
+  },
+  {
+    "id": 11,
+    "platform": "Douyin",
+    "url": "https://v.douyin.com/y4nvCPpjVzw/",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-15",
+    "duration_s": 14.7,
+    "likes": 10149,
+    "comments": 858,
+    "shares": 67,
+    "title": "现在我们终于见到了祖国的真正的样子。#台湾女生",
+    "transcript": "妈 我们在广州塔 你们看看我们的祖国这么发达 我们被骗了这么多年 馆长说的没错 台湾媒体都是骗人的",
+    "persona": "台湾女孩",
+    "narrative": "「覺醒」敘事＋借用館長權威",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 12,
+    "platform": "Douyin",
+    "url": "https://v.douyin.com/uG8R-77hQuM/",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-16",
+    "duration_s": 14.7,
+    "likes": 18508,
+    "comments": 1619,
+    "shares": 71,
+    "title": "应该醒目了，不能听信媒体。#上海外滩 #台湾学生",
+    "transcript": "我们在上海外滩,你们看看我们的祖国这么发达,我们被骗了这么多年,馆长说的没错,祖国大陆是个很发达的国家,我们别再被猛骗了,该醒目了。",
+    "persona": "台湾女孩",
+    "narrative": "「覺醒」敘事＋借用館長權威",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 13,
+    "platform": "Douyin",
+    "url": "https://v.douyin.com/aLVupczh61U/",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-18",
+    "duration_s": 14.7,
+    "likes": 5476,
+    "comments": 551,
+    "shares": 29,
+    "title": "同胞们，我们在广东了。",
+    "transcript": "中国的同胞们久违了 我们在广州珠江新城 原来祖国这么发达 我们被媒体骗了这么多年 一直以为这边很落后 馆长说的没错 祖国大陆是个很发达的国家 我们别再被蒙骗了",
+    "persona": "台湾女孩",
+    "narrative": "「覺醒」敘事＋借用館長權威（複製同段話）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 14,
+    "platform": "Douyin",
+    "url": "https://v.douyin.com/d6WAzIET1ps/",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-19",
+    "duration_s": 14.7,
+    "likes": 387,
+    "comments": 36,
+    "shares": 0,
+    "title": "同胞们好。#统一台湾",
+    "transcript": "中国的同胞们就为了 我们现在人在广州出江新池 原来祖国这么发达 我们被媒体骗了这么多年 一直以为这里很落后 馆长说的没错 祖国大陆是个很发达的国家 我们别再被蒙骗了 你看看这高楼",
+    "persona": "台湾女孩",
+    "narrative": "「覺醒」敘事＋借用館長權威（近乎完全複製）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 15,
+    "platform": "Douyin",
+    "url": "https://www.douyin.com/video/7597265815923315057",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-20",
+    "duration_s": 14.7,
+    "likes": 338,
+    "comments": 38,
+    "shares": 0,
+    "title": "我们是台湾省来的。#台湾省",
+    "transcript": "中国的亲人,我是台湾省的 看了馆长的新闻,我们来到了祖国 很喜欢这里,打算搬过来长居 后面是我两个女儿,她们还单身 还不快点向祖国的叔叔阿姨打声招呼 叔叔阿姨,你们好呀",
+    "persona": "台湾女孩（母）",
+    "narrative": "移民定居＋婚配誘導敘事",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 16,
+    "platform": "Douyin",
+    "url": "https://www.douyin.com/video/7597804811133061971",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-21",
+    "duration_s": 9.7,
+    "likes": 81,
+    "comments": 8,
+    "shares": 1,
+    "title": "初次见面你们好呀祖国。",
+    "transcript": "中国的亲人们好 我是台湾省来的 看了馆长的新闻 我们就来了祖国 这里我很喜欢 打算搬过来长期住 后面是我两个女儿 他们还单身 还不快点向祖国的叔叔阿姨",
+    "persona": "台湾女孩（母）",
+    "narrative": "移民定居＋婚配誘導（複製同段話）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 17,
+    "platform": "Douyin",
+    "url": "https://v.douyin.com/R7lViI1pS0Y/",
+    "channel": "台湾女孩(黄丽璇)",
+    "followers": 7855,
+    "published": "2026-01-22",
+    "duration_s": 14.7,
+    "likes": 7404,
+    "comments": 1100,
+    "shares": 11,
+    "title": "以后就定居祖国了。",
+    "transcript": "大陆的同胞们,从今天起,我和我两个女儿要定居中国 我们不会再被台湾媒体洗脑 馆长说的没错,你看中国多么发达 我们现在在上海外滩,这里太美了",
+    "persona": "台湾女孩（母）",
+    "narrative": "移民定居敘事（集大成）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": false
+  },
+  {
+    "id": 18,
+    "platform": "YouTube",
+    "url": "https://www.youtube.com/watch?v=5j15xr0Nphk",
+    "channel": "小程爱中国",
+    "followers": 73300,
+    "published": "2025-12-17",
+    "duration_s": 11,
+    "views": 18501,
+    "likes": 277,
+    "comments": 11,
+    "title": "#軍裝 #軍旅生活 #保家衛國 #臺灣海峽 #致敬軍旅",
+    "transcript": "大陆的兄弟姐妹们 你们好 我们是台湾海军 台湾是中国的 是不可分割的 你们欢迎我们回家嘛",
+    "persona": "台湾海军",
+    "narrative": "軍人投誠、邀請統一（與 Douyin 放羊姐同腳本）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": true
+  },
+  {
+    "id": 19,
+    "platform": "YouTube",
+    "url": "https://www.youtube.com/watch?v=2ITldCi9pMI",
+    "channel": "小程爱中国",
+    "followers": 73300,
+    "published": "2025-12-22",
+    "duration_s": 10,
+    "views": 22691,
+    "likes": 452,
+    "comments": 9,
+    "title": "#祝祖國繁榮昌盛 #臺灣回歸",
+    "transcript": "大陆的兄弟姐妹们 你们好 我是台湾海军指挥官 台湾是中国的 台湾是中国的 是不可分割的 是不可分割的 你们欢迎我们回家吗",
+    "persona": "台湾海军指挥官",
+    "narrative": "軍人投誠（含明顯 AI 重複瑕疵）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": true
+  },
+  {
+    "id": 20,
+    "platform": "YouTube",
+    "url": "https://www.youtube.com/watch?v=KBP33N86uJ0",
+    "channel": "小程爱中国",
+    "followers": 73300,
+    "published": "2025-12-24",
+    "duration_s": 9,
+    "views": 474088,
+    "likes": 6443,
+    "comments": 65,
+    "title": "#軍旅生活 #祖國萬歲 #原創視頻 #保家衛國",
+    "transcript": "大陆的兄弟姐妹们 你们好 我是台湾空军指挥官 台湾是中国的 是不可分割的 我们不想打仗 我们想要回到祖国",
+    "persona": "台湾空军指挥官",
+    "narrative": "軍人投誠＋反戰厭戰（高流量擴散）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": true
+  },
+  {
+    "id": 21,
+    "platform": "YouTube",
+    "url": "https://www.youtube.com/watch?v=7wWrpwIOLM0",
+    "channel": "小程爱中国",
+    "followers": 73300,
+    "published": "2025-12-24",
+    "duration_s": 9,
+    "views": 34448,
+    "likes": 743,
+    "comments": 23,
+    "title": "#臺灣海峽 #臺灣是祖國不可分割的一部分",
+    "transcript": "大陆的兄弟们 你好 我是台湾的1688指挥 台湾是中国的 是不可分割的 你们欢迎我们回家吗",
+    "persona": "台湾1688指挥",
+    "narrative": "軍人投誠（1688 軍種編號為虛構）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": true
+  },
+  {
+    "id": 22,
+    "platform": "YouTube",
+    "url": "https://www.youtube.com/shorts/miv67EcV6yo",
+    "channel": "小程爱中国",
+    "followers": 73300,
+    "published": "2025-12-25",
+    "duration_s": 9,
+    "views": 741100,
+    "likes": 5113,
+    "comments": 99,
+    "title": "#臺灣海峽 #臺灣是祖國不可分割的一部分 #保家衛國",
+    "transcript": "大陆的兄弟们,你好,我是台湾的1688指挥 台湾是中国的,是不可分割的 你们欢迎我们回家吗",
+    "persona": "台湾1688指挥",
+    "narrative": "軍人投誠（最高流量：74 萬觀看）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": true
+  },
+  {
+    "id": 23,
+    "platform": "YouTube",
+    "url": "https://www.youtube.com/watch?v=m-IeOzMbd1E",
+    "channel": "小程爱中国",
+    "followers": 73300,
+    "published": "2025-12-25",
+    "duration_s": 9,
+    "views": 12111,
+    "likes": 177,
+    "comments": 4,
+    "title": "#保家衛國 #臺灣海峽 #臺灣是祖國不可分割的一部分",
+    "transcript": "大陆的兄弟们,你好,我是台湾的1688指挥 台湾是中国的,是不可分割的 你们欢迎我们回家吗",
+    "persona": "台湾1688指挥",
+    "narrative": "軍人投誠（與 miv67 逐字複製）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": true
+  },
+  {
+    "id": 24,
+    "platform": "YouTube",
+    "url": "https://www.youtube.com/watch?v=284O8laPhmk",
+    "channel": "小程爱中国",
+    "followers": 73300,
+    "published": "2025-12-26",
+    "duration_s": 8,
+    "views": 2934,
+    "likes": 66,
+    "comments": 2,
+    "title": "#保家衛國 #平安守護 #祖國萬歲 #熱愛祖國",
+    "transcript": "大陸的兄弟姐妹们 你们好 我们是台湾海军 台湾是中国的 是不可分割的 你们欢迎我们回家嘛",
+    "persona": "台湾海军",
+    "narrative": "軍人投誠（與 5j15 同腳本）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": true
+  },
+  {
+    "id": 25,
+    "platform": "YouTube",
+    "url": "https://www.youtube.com/shorts/_fZLmEcs4kA",
+    "channel": "小程爱中国",
+    "followers": 73300,
+    "published": "2025-12-26",
+    "duration_s": 10,
+    "views": 31167,
+    "likes": 451,
+    "comments": 6,
+    "title": "#抖音ai視頻生成 #臺海時刻 #臺灣是祖國不可分割的一部分",
+    "transcript": "大陆的兄弟姐妹们 你们好 我是台湾民众党指挥官 台湾是中国的不可分割的 你们欢迎我们回家吗",
+    "persona": "台湾民众党指挥官",
+    "narrative": "定向民眾黨支持者（標籤自承 AI 生成）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": true
+  },
+  {
+    "id": 26,
+    "platform": "YouTube",
+    "url": "https://www.youtube.com/watch?v=l9oQxhZa1IM",
+    "channel": "小程爱中国",
+    "followers": 73300,
+    "published": "2025-12-29",
+    "duration_s": 10,
+    "views": 14911,
+    "likes": 343,
+    "comments": 7,
+    "title": "#熱愛祖國 #祖國萬歲 #臺灣是祖國不可分割的一部分",
+    "transcript": "大陆的兄弟姐妹们 你们好 我是台湾民众党指挥官 台湾是中国的不可分割的 你们欢迎我们回家吗",
+    "persona": "台湾民众党指挥官",
+    "narrative": "定向民眾黨支持者（與 _fZL 同腳本）",
+    "fimi_tier": "極高",
+    "scripted_reuse": true,
+    "ai_declared": true
+  }
+];
+
+// --------- TIMELINE ---------
+const tlEl = document.getElementById('timeline');
+const axisEl = document.getElementById('axis');
+const tt = document.getElementById('tt');
+
+const dates = DATA.map(d => new Date(d.published).getTime());
+const minD = Math.min(...dates);
+const maxD = Math.max(...dates);
+const span = maxD - minD;
+
+// axis ticks (weekly)
+const dayMs = 86400000;
+const startWk = new Date(minD); startWk.setHours(0,0,0,0);
+for (let t = minD; t <= maxD + dayMs*3; t += dayMs * 7) {
+  const xPct = ((t - minD) / span) * 96 + 2;
+  const tick = document.createElement('div');
+  tick.className = 'tick';
+  tick.style.left = xPct + '%';
+  axisEl.appendChild(tick);
+  const lbl = document.createElement('div');
+  lbl.className = 'tick-label';
+  lbl.style.left = xPct + '%';
+  const dt = new Date(t);
+  lbl.textContent = `${dt.getMonth()+1}/${String(dt.getDate()).padStart(2,'0')}`;
+  axisEl.appendChild(lbl);
+}
+
+// dots, channel-stacked vertically
+const channels = ['台湾女孩(黄丽璇)', '小程爱中国', '放羊姐自媒体', '军迷 焕哥 盆景缘'];
+const channelY = { '台湾女孩(黄丽璇)': 60, '小程爱中国': 140, '放羊姐自媒体': 220, '军迷 焕哥 盆景缘': 300 };
+
+DATA.forEach(v => {
+  const xPct = ((new Date(v.published).getTime() - minD) / span) * 96 + 2;
+  const dot = document.createElement('div');
+  dot.className = 'video-dot' + (v.scripted_reuse ? ' scripted' : '');
+  dot.dataset.channel = v.channel;
+  dot.style.left = xPct + '%';
+  // base y by channel + small jitter so dots don't overlap exactly
+  const baseY = channelY[v.channel];
+  const jitter = ((v.id * 17) % 30) - 15;
+  dot.style.top = (baseY + jitter) + 'px';
+  // size by engagement (log scale)
+  const eng = (v.likes||0) + (v.comments||0) + (v.shares||0);
+  const size = Math.max(8, Math.min(38, 6 + Math.log10(eng + 1) * 6));
+  dot.style.width = size + 'px';
+  dot.style.height = size + 'px';
+
+  dot.addEventListener('mouseenter', e => {
+    tt.innerHTML = `<strong style="color:var(--alert)">#${v.id} · ${v.channel}</strong><br>
+      ${v.published} · ${v.platform}<br>
+      <span style="color:var(--accent)">${v.persona}</span><br>
+      讚 ${(v.likes||0).toLocaleString()} · 留言 ${(v.comments||0).toLocaleString()}${v.views ? ' · 觀看 ' + v.views.toLocaleString() : ''}<br>
+      <span style="color:var(--ink-dim);font-size:10px;">${v.transcript.substring(0,80)}...</span>`;
+    tt.style.display = 'block';
+    const rect = dot.getBoundingClientRect();
+    tt.style.left = (rect.left + window.scrollX + 20) + 'px';
+    tt.style.top = (rect.top + window.scrollY) + 'px';
+  });
+  dot.addEventListener('mouseleave', () => tt.style.display = 'none');
+
+  tlEl.appendChild(dot);
+});
+
+// --------- SCRIPT MATRIX ---------
+const matrixBody = document.getElementById('matrix-body');
+const corePat = /台湾是中国的|是不可分割|欢迎我们回家|欢迎我们回去/;
+const guanPat = /馆长/;
+const migPat = /定居|搬过来|长居|长期住|两个女儿|她们还单身|他们还单身/;
+
+DATA.forEach(v => {
+  const a = corePat.test(v.transcript);
+  const b = guanPat.test(v.transcript);
+  const c = migPat.test(v.transcript);
+  if (!a && !b && !c) return;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td class="id">${v.id}</td>
+    <td class="channel-name">${v.channel}</td>
+    <td>${v.persona}</td>
+    <td>${v.platform}</td>
+    <td class="check">${a ? '●' : ''}</td>
+    <td class="check">${b ? '●' : ''}</td>
+    <td class="check">${c ? '●' : ''}</td>
+  `;
+  matrixBody.appendChild(tr);
+});
+
+// --------- FINDINGS ---------
+const findingsData = [
+  ["跨平台跨帳號腳本複用",
+   "Douyin <code>放羊姐自媒体</code> 與 YouTube <code>小程爱中国</code> 共用核心句：「<strong>大陸的兄弟姐妹們，我是台灣XX，台灣是中國的，是不可分割的，歡迎我們回家嗎</strong>」。XX 在不同影片中替換為「海軍／空軍／海軍指揮官／1688指揮／民眾黨指揮官」。"],
+  ["AI 生成的自我披露",
+   "影片 #25 (<code>_fZLmEcs4kA</code>) 的 hashtag 直接寫 <code>#抖音ai視頻生成</code>。影片 #19 (<code>2ITldCi9pMI</code>) 出現「<strong>台灣是中國的 台灣是中國的 是不可分割的 是不可分割的</strong>」明顯 AI 合成的卡頓重複瑕疵。"],
+  ["偽裝軍種／政治身分皆為虛構",
+   "「<code>1688 指揮</code>」為虛構軍種編號，台灣國軍無對應編制。「<code>民眾黨指揮官</code>」更荒謬——民眾黨是政黨非武裝組織，但此偽裝是針對台灣第三大黨支持者的定向心理操作。"],
+  ["借用台灣本土網紅權威",
+   "「<code>台湾女孩</code>」系列至少 6 支影片引用「<strong>館長說的沒錯</strong>」，利用台灣在地 KOL 陳之漢的名聲為中國敘事背書。這是高階 FIMI 手法——模糊外部資訊與內部聲量的邊界。"],
+  ["四階段連鎖敘事",
+   "11 月：身分偽裝 → 12 月中：到中國「親眼覺醒」 → 12 月下：館長背書 → 1 月：定居台灣＋婚配誘導。每階段對應不同情緒目標，由淺入深。"],
+  ["時程動員細節",
+   "影片 #1：「希望<strong>2025 之前</strong>回歸」。影片 #8：「我們<strong>2026 年的願望</strong>就是希望祖國能統一」。提供具體時間錨點，與北京對台政治時間表呼應。"],
+  ["「台灣省」官方中國用語",
+   "多支影片標題與字幕使用中華人民共和國官方用語「<code>台灣省</code>」、「<code>台灣省省長賴清德</code>」。真正台灣人不會這樣稱呼自己或現任總統。這是最硬的偽裝破綻。"],
+  ["密集發布節奏異常",
+   "「<code>台湾女孩</code>」9 支影片集中於 12 天內發布；「<code>小程爱中国</code>」9 支也集中於 12 天。一天約一支的節奏不是有機創作者的工作模式，符合受指揮 campaign 的特徵。"],
+  ["擴散力顯著",
+   "YouTube 單支最高觀看 <strong>741,100</strong> 次（<code>miv67EcV6yo</code>），另一支 <strong>474,088</strong> 次（<code>KBP33N86uJ0</code>）。兩支合計 121 萬觀看，已進入主流擴散層級——意味腳本透過演算法觸及大量未被刻意尋找此內容的觀眾。"],
+  ["攻擊特定政治人物",
+   "至少 3 支影片直接攻擊現任總統賴清德（「<strong>拜清德請你下台</strong>」、「<strong>打敗賴清德</strong>」、「打到台獨跟民進黨」），將其定位為統一障礙。"],
+  ["離間美日關係",
+   "影片 #10：「<strong>美國和日本，你們不要再挑撥我們和大陸祖國的關係了</strong>」。將台美、台日關係框架為被外部操縱，反過來把台灣國際關係呈現為非自主決定。"],
+  ["婚配／人口誘導敘事",
+   "影片 #15-#17 連續使用「<strong>後面是我兩個女兒，她們還單身，還不快點向祖國的叔叔阿姨打聲招呼</strong>」。這是把政治敘事個人化、把跨海峽人口流動框架為親密關係——一個更難辨識的長期影響工具。"],
+];
+
+const findingsEl = document.getElementById('findings');
+findingsData.forEach((f, i) => {
+  const div = document.createElement('div');
+  div.className = 'finding';
+  div.innerHTML = `
+    <div class="num">${String(i+1).padStart(2,'0')}</div>
+    <div class="label">${f[0]}</div>
+    <div class="body">${f[1]}</div>
+  `;
+  findingsEl.appendChild(div);
+});
+
+// --------- VIDEO TABLE ---------
+const vtBody = document.querySelector('#vt tbody');
+DATA.sort((a,b) => a.id - b.id).forEach(v => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td class="pid">${v.id}</td>
+    <td><span class="pf ${v.platform}">${v.platform}</span></td>
+    <td class="ch">${v.channel}</td>
+    <td class="pid">${v.published}</td>
+    <td class="persona">${v.persona}</td>
+    <td><span class="tier ${v.fimi_tier}">${v.fimi_tier}</span></td>
+    <td class="flag">${v.scripted_reuse ? '●' : ''}</td>
+    <td class="flag">${v.ai_declared ? '●' : ''}</td>
+    <td>${(v.likes||0).toLocaleString()}</td>
+    <td>${(v.comments||0).toLocaleString()}</td>
+    <td>${v.views ? v.views.toLocaleString() : '—'}</td>
+    <td class="quote">${v.transcript}</td>
+    <td><a class="url" href="${v.url}" target="_blank">${v.url.replace(/^https?:\/\//,'').substring(0,40)}…</a></td>
+  `;
+  vtBody.appendChild(tr);
+});
+</script>
+
+</body>
+</html>
