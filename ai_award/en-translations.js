@@ -8,7 +8,7 @@ window.DTL_EN = [
   { sel: '.nav-links a[href="#services"]', text: 'Tools' },
 
   // ============ HERO ============
-  { sel: '.hero-eyebrow', html: '<span class="hero-eyebrow-dot"></span>DTL AI Teammate Program' },
+  { sel: '.hero-eyebrow', html: '<span class="hero-eyebrow-dot"></span>DTL AI Teammate Program · Now live' },
   { sel: '.hero-title', html: 'Play with AI.<br><span class="gradient">Make fun stuff</span>.' },
   { sel: '.hero-sub', html: "Your idea, our budget. Start today.<br>" },
   { sel: '.hero-cta-row .btn-primary', html: 'Start <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' },
@@ -43,7 +43,8 @@ window.DTL_EN = [
   { sel: '.level-card.lv2 .lv-purpose', text: 'Turn your experience into an asset the team can use.' },
   { sel: '.level-card.lv3 .lv-name', text: 'Builder' },
   { sel: '.level-card.lv3 .lv-purpose', text: 'Bake AI into your workflow. Ship measurable results.' },
-  { sel: '.level-card.lv4 .lv-name', text: 'Legend' },
+  { sel: '.level-card.lv4 .lv-name', text: 'Pioneer' },
+  { sel: '.level-card.lv4 .lv-tag', text: 'LV 04 · PIONEER' },
   { sel: '.level-card.lv4 .lv-purpose', text: 'Change how the organization works.' },
   { sel: '.level-card .lv-reward-line .label', text: 'REWARD' },
 
@@ -116,12 +117,13 @@ window.DTL_EN = [
   { sel: '#lv3 .tier.t4 .tier-criteria', text: 'Incorporated into SOP or adopted by most of the org.' },
 
   // ============ L4 DETAIL ============
-  { sel: '#lv4 .ld-title', text: 'Legend of the Year' },
+  { sel: '#lv4 .ld-title', text: 'Pioneer of the Year' },
+  { sel: '#lv4 .ld-number', text: 'LV 04 · PIONEER' },
   { sel: '#lv4 .ld-intro', html: 'For the one person who <strong>truly changed how the organization works</strong>. Once a year, evaluated at year-end.' },
   { sel: '#lv4 .ld-field:nth-of-type(1) .ld-field-label', text: 'Criteria · most of the following' },
   { sel: '#lv4 .ld-field:nth-of-type(1) .ld-field-body', html: '<ul><li>Built an AI system adopted across teams or the whole org</li><li>Measurably raised overall efficiency</li><li>Pioneered new research methods, advocacy formats, or business models</li><li>Built sustainable long-term capability</li></ul>' },
   { sel: '#lv4 .ld-field:nth-of-type(2) .ld-field-label', text: 'Reward' },
-  { sel: '#lv4 .ld-field:nth-of-type(2) .ld-field-body', html: '<ul><li>Annual special bonus <strong>from NT$ 200,000</strong></li><li>Public recognition</li><li>Priority in promotion / development decisions</li><li>Career conversation with leadership</li></ul>' },
+  { sel: '#lv4 .ld-field:nth-of-type(2) .ld-field-body', html: '<ul><li>Annual special bonus <strong>from NT$ 200,000</strong></li><li>Shoutout at the year-end all hands</li><li>Priority in promotion / development decisions</li><li>Career conversation</li></ul>' },
 
   // ============ REVIEW ============
   { sel: '#judges .section-title', text: "Who reviews?" },
@@ -147,7 +149,7 @@ window.DTL_EN = [
   { sel: '#culture .culture-col.no .culture-list li:nth-child(5)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>Results that can\'t be verified' },
 
   // ============ CADENCE ============
-  { sel: '#cadence .section-title', text: 'How the program runs.' },
+  { sel: '#cadence .section-title', text: 'How the program runs. Live from today.' },
   { sel: '#cadence .cadence-cell:nth-of-type(1) .cadence-big', text: 'Monthly' },
   { sel: '#cadence .cadence-cell:nth-of-type(1) .cadence-list', html: 'Applications open · share sessions<br>Published case studies' },
   { sel: '#cadence .cadence-cell:nth-of-type(2) .cadence-big', text: 'Quarterly' },
