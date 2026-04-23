@@ -1,6 +1,9 @@
 // English translations for AI Teammate Program (DTL AI Award)
 // Each entry: { sel, text? | html? }  — applied to every matching element
 window.DTL_EN = [
+  // ============ PAGE TITLE ============
+  { sel: 'title', text: 'AI Teammate Program · Doublethink Lab' },
+
   // ============ NAV ============
   { sel: '.nav-links a[href="#levels"]', text: 'Levels' },
   { sel: '.nav-links a[href="#culture"]', text: 'Culture' },
