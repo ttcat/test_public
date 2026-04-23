@@ -5,7 +5,7 @@ window.DTL_EN = [
   { sel: '.nav-links a[href="#levels"]', text: 'Levels' },
   { sel: '.nav-links a[href="#culture"]', text: 'Culture' },
   { sel: '.nav-links a[href="#policy"]', text: 'Policy' },
-  { sel: '.nav-links a[href="#services"]', text: 'Start' },
+  { sel: '.nav-links a[href="#services"]', text: 'Tools' },
 
   // ============ HERO ============
   { sel: '.hero-eyebrow', html: '<span class="hero-eyebrow-dot"></span>DTL AI Teammate Program' },
@@ -30,7 +30,7 @@ window.DTL_EN = [
   { sel: '#principles .principle:nth-child(2) .principle-body', text: 'A good trick benefits the whole team — and earns you more.' },
   { sel: '#principles .principle:nth-child(3) .principle-title', text: 'Failure is fine' },
   { sel: '#principles .principle:nth-child(3) .principle-body', html: 'Hitting walls is a contribution too — sharing what you learned from it is the <em>best</em> kind.' },
-  { sel: '#principles .principle:nth-child(4) .principle-title', text: 'The Good Stuff Awards' },
+  { sel: '#principles .principle:nth-child(4) .principle-title', text: 'Awards' },
   { sel: '#principles .principle:nth-child(4) .principle-body', text: 'Real value gets seen — and earns real rewards.' },
 
   // ============ LEVELS OVERVIEW ============
