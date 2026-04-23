@@ -16,22 +16,22 @@ window.DTL_EN = [
 
   // ============ TTCAT QUOTE ============
   { sel: '.quote-text', html:
-    '<p>AI is reshaping most of work on this planet — ours included.</p>' +
+    '<p>AI is reshaping most work on this planet — ours included.</p>' +
     '<p>Right now, the only way to turn AI into a tool that feels natural in your hands is to have the resources — and the freedom — to actually play with it. Work, research, side projects, games, or just fixing something annoying in your daily life. We pay the bill.</p>' +
     "<p>Supporting every DTL teammate to grow and level up has always mattered to me. This is a defining moment — but no FOMO. The org has your back: budget, places to share, and a chance for us to learn together.</p>"
   },
 
   // ============ PRINCIPLES ============
   { sel: '#principles .section-title', html: 'One spirit,<br>four angles.' },
-  { sel: '#principles .section-sub', text: 'Simple as that — make it work for you first, share it, tell us when it flops, great work gets paid.' },
+  { sel: '#principles .section-sub', text: 'Simple as that — make it work for you first, share it, tell us when it flops, great work gets more rewards.' },
   { sel: '#principles .principle:nth-child(1) .principle-title', text: 'Make it work for you first' },
-  { sel: '#principles .principle:nth-child(1) .principle-body', text: "We fund the exploring. We reward the shipping." },
+  { sel: '#principles .principle:nth-child(1) .principle-body', text: "We fund the exploring. We reward the sharing and shipping." },
   { sel: '#principles .principle:nth-child(2) .principle-title', text: 'Share it' },
-  { sel: '#principles .principle:nth-child(2) .principle-body', text: 'A good trick benefits the whole team — and pays more.' },
+  { sel: '#principles .principle:nth-child(2) .principle-body', text: 'A good trick benefits the whole team — and earns bigger rewards.' },
   { sel: '#principles .principle:nth-child(3) .principle-title', text: "Didn't work? Tell us." },
   { sel: '#principles .principle:nth-child(3) .principle-body', html: 'Hitting walls is a contribution too — sharing what you learned from it is the <em>best</em> kind.' },
   { sel: '#principles .principle:nth-child(4) .principle-title', text: 'Awards' },
-  { sel: '#principles .principle:nth-child(4) .principle-body', text: 'Real value gets seen — and paid.' },
+  { sel: '#principles .principle:nth-child(4) .principle-body', text: 'Real value gets seen — and rewarded.' },
 
   // ============ LEVELS OVERVIEW ============
   { sel: '#levels .section-title', html: 'Four stages.<br>Start wherever you want.' },
