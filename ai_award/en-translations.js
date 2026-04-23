@@ -241,5 +241,5 @@ window.DTL_EN = [
 
   // ============ CLOSING ============
   { sel: '.closing-headline', html: 'Play.<br><span class="gradient">That\'s how it starts.</span>' },
-  { sel: '.closing-sub', html: "Don't wait for perfect — it's really fun." },
+  { sel: '.closing-sub', html: "Start now. Perfect later. — it's really fun." },
 ];
