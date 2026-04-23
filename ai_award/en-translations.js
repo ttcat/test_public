@@ -5,11 +5,11 @@ window.DTL_EN = [
   { sel: '.nav-links a[href="#levels"]', text: 'Levels' },
   { sel: '.nav-links a[href="#culture"]', text: 'Culture' },
   { sel: '.nav-links a[href="#policy"]', text: 'Policy' },
-  { sel: '.nav-links a[href="#services"]', text: 'Start' },
+  { sel: '.nav-links a[href="#services"]', text: 'Tools' },
 
   // ============ HERO ============
-  { sel: '.hero-eyebrow', html: '<span class="hero-eyebrow-dot"></span>DTL AI Teammate Program' },
-  { sel: '.hero-title', html: 'Play with AI.<br><span class="gradient">Mess around</span>.' },
+  { sel: '.hero-eyebrow', html: '<span class="hero-eyebrow-dot"></span>DTL AI Teammate Program · Now live' },
+  { sel: '.hero-title', html: 'Play with AI.<br><span class="gradient">Make fun stuff</span>.' },
   { sel: '.hero-sub', html: "Your idea, our budget. Start today.<br>" },
   { sel: '.hero-cta-row .btn-primary', html: 'Start <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' },
   { sel: '.hero-cta-row .btn-ghost', text: 'See Level 1 first' },
@@ -18,19 +18,19 @@ window.DTL_EN = [
   { sel: '.quote-text', html:
     '<p>AI is reshaping most of work on this planet — ours included.</p>' +
     '<p>In this wave, the only way to turn AI into a tool that feels natural in your hands is to have the resources — and the freedom — to actually play with it. Work, research, side projects, games, or just fixing something annoying in your daily life. We pay the bill.</p>' +
-    "<p>Supporting every DTL teammate to grow and level up has always mattered to me. This is a defining moment — but no FOMO. The org has your back: budget, stages to share, and a chance for us to learn together.</p>"
+    "<p>Supporting every DTL teammate to grow and level up has always mattered to me. This is a defining moment — but no FOMO. The org has your back: budget, places to share, and a chance for us to learn together.</p>"
   },
 
   // ============ PRINCIPLES ============
-  { sel: '#principles .section-title', html: 'One spirit.<br>Four sides to it.' },
-  { sel: '#principles .section-sub', text: 'Simple as that — make real things, share them out, allow failure, let contribution be seen.' },
+  { sel: '#principles .section-title', html: 'One spirit,<br>four angles.' },
+  { sel: '#principles .section-sub', text: 'Simple as that — make real things, share them, allow failure, let contribution be seen.' },
   { sel: '#principles .principle:nth-child(1) .principle-title', text: 'Make real things' },
   { sel: '#principles .principle:nth-child(1) .principle-body', text: "We fund the exploring. We reward the shipping." },
   { sel: '#principles .principle:nth-child(2) .principle-title', text: 'Share it out' },
   { sel: '#principles .principle:nth-child(2) .principle-body', text: 'A good trick benefits the whole team — and earns you more.' },
   { sel: '#principles .principle:nth-child(3) .principle-title', text: 'Failure is fine' },
-  { sel: '#principles .principle:nth-child(3) .principle-body', html: 'Hitting walls is a contribution too — sharing it is the <em>best</em> kind.' },
-  { sel: '#principles .principle:nth-child(4) .principle-title', text: 'The Good Stuff Awards' },
+  { sel: '#principles .principle:nth-child(3) .principle-body', html: 'Hitting walls is a contribution too — sharing what you learned from it is the <em>best</em> kind.' },
+  { sel: '#principles .principle:nth-child(4) .principle-title', text: 'Awards' },
   { sel: '#principles .principle:nth-child(4) .principle-body', text: 'Real value gets seen — and earns real rewards.' },
 
   // ============ LEVELS OVERVIEW ============
@@ -43,17 +43,18 @@ window.DTL_EN = [
   { sel: '.level-card.lv2 .lv-purpose', text: 'Turn your experience into an asset the team can use.' },
   { sel: '.level-card.lv3 .lv-name', text: 'Builder' },
   { sel: '.level-card.lv3 .lv-purpose', text: 'Bake AI into your workflow. Ship measurable results.' },
-  { sel: '.level-card.lv4 .lv-name', text: 'Legend' },
+  { sel: '.level-card.lv4 .lv-name', text: 'Pioneer' },
+  { sel: '.level-card.lv4 .lv-tag', text: 'LV 04 · PIONEER' },
   { sel: '.level-card.lv4 .lv-purpose', text: 'Change how the organization works.' },
   { sel: '.level-card .lv-reward-line .label', text: 'REWARD' },
 
   // ============ L1 DETAIL ============
   { sel: '#lv1 .ld-title', text: 'Explorer' },
   { sel: '#lv1 .ld-reward', text: 'Full tool reimbursement' },
-  { sel: '#lv1 .ld-intro', text: "Want to try an AI tool? Tell us. We'll pay for it — as long as it gets you started and actually using it." },
+  { sel: '#lv1 .ld-intro', text: "Want to try an AI tool? Tell us. We'll pay for it — as long as it gets you started and you actually use it." },
   { sel: '#lv1 .freedom-label', text: 'The point' },
   { sel: '#lv1 .freedom-title', text: 'Use it for whatever you want.' },
-  { sel: '#lv1 .freedom-body', text: "Up to three months of AI exploration — you use, we pay. Doesn't have to be work. Side projects, animations, novels, games, language learning, doing your taxes, planning trips, or sampling a bunch of tools at once? All good. We pay the bill. We believe: if you're willing to play, you'll actually learn to use it." },
+  { sel: '#lv1 .freedom-body', text: "Up to three months of AI exploration — you use, we pay. Doesn't have to be work. Side projects, animations, novels, games, language learning, doing your taxes, planning trips, or sampling a bunch of tools at once? All good. We pay the bill. We believe the best way to learn AI is to actually play with it and have fun doing it." },
   { sel: '#lv1 .freedom-tags .freedom-tag:nth-child(1)', text: 'games' },
   { sel: '#lv1 .freedom-tags .freedom-tag:nth-child(2)', text: 'videos' },
   { sel: '#lv1 .freedom-tags .freedom-tag:nth-child(3)', text: 'novels' },
@@ -67,7 +68,7 @@ window.DTL_EN = [
   { sel: '#lv1 .ld-field:nth-of-type(2) .ld-field-label', text: 'What we cover' },
   { sel: '#lv1 .ld-field:nth-of-type(2) .ld-field-body', html: 'Tool subscriptions, initially covered for <strong>1–3 months</strong> depending on your needs.' },
   { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-label', text: "Your part — a quick writeup" },
-  { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-body', html: 'Tell the team what you did, whether the tool is any good, and how to get the most out of it. Share both within your team and org-wide:<ul><li>what you used it for</li><li>what works, what doesn\'t</li><li>whether it\'s worth renewing</li><li>whether you\'d recommend it to colleagues</li></ul><div class="ld-note">Share before you apply for the next round! Let the budget actually do something.</div>' },
+  { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-body', html: 'Tell the team what you did, whether the tool is any good, and how to get the most out of it. Share both within your team and org-wide:<ul><li>what you used it for</li><li>what works, what doesn\'t</li><li>whether it\'s worth renewing</li><li>whether you\'d recommend it to colleagues</li></ul><div class="ld-note">Share before you apply for the next round — that way the budget actually creates value.</div>' },
 
   // ============ L2 DETAIL ============
   { sel: '#lv2 .ld-title', text: 'Contributor' },
@@ -116,12 +117,13 @@ window.DTL_EN = [
   { sel: '#lv3 .tier.t4 .tier-criteria', text: 'Incorporated into SOP or adopted by most of the org.' },
 
   // ============ L4 DETAIL ============
-  { sel: '#lv4 .ld-title', text: 'Legend of the Year' },
+  { sel: '#lv4 .ld-title', text: 'Pioneer of the Year' },
+  { sel: '#lv4 .ld-number', text: 'LV 04 · PIONEER' },
   { sel: '#lv4 .ld-intro', html: 'For the one person who <strong>truly changed how the organization works</strong>. Once a year, evaluated at year-end.' },
   { sel: '#lv4 .ld-field:nth-of-type(1) .ld-field-label', text: 'Criteria · most of the following' },
   { sel: '#lv4 .ld-field:nth-of-type(1) .ld-field-body', html: '<ul><li>Built an AI system adopted across teams or the whole org</li><li>Measurably raised overall efficiency</li><li>Pioneered new research methods, advocacy formats, or business models</li><li>Built sustainable long-term capability</li></ul>' },
   { sel: '#lv4 .ld-field:nth-of-type(2) .ld-field-label', text: 'Reward' },
-  { sel: '#lv4 .ld-field:nth-of-type(2) .ld-field-body', html: '<ul><li>Annual special bonus <strong>from NT$ 200,000</strong></li><li>Public recognition</li><li>Priority in promotion / development decisions</li><li>Career conversation with leadership</li></ul>' },
+  { sel: '#lv4 .ld-field:nth-of-type(2) .ld-field-body', html: '<ul><li>Annual special bonus <strong>from NT$ 200,000</strong></li><li>Shoutout at the year-end all hands</li><li>Priority in promotion / development decisions</li><li>Career conversation</li></ul>' },
 
   // ============ REVIEW ============
   { sel: '#judges .section-title', text: "Who reviews?" },
@@ -147,7 +149,7 @@ window.DTL_EN = [
   { sel: '#culture .culture-col.no .culture-list li:nth-child(5)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>Results that can\'t be verified' },
 
   // ============ CADENCE ============
-  { sel: '#cadence .section-title', text: 'How the program runs.' },
+  { sel: '#cadence .section-title', text: 'How the program runs. Live from today.' },
   { sel: '#cadence .cadence-cell:nth-of-type(1) .cadence-big', text: 'Monthly' },
   { sel: '#cadence .cadence-cell:nth-of-type(1) .cadence-list', html: 'Applications open · share sessions<br>Published case studies' },
   { sel: '#cadence .cadence-cell:nth-of-type(2) .cadence-big', text: 'Quarterly' },
@@ -241,5 +243,5 @@ window.DTL_EN = [
 
   // ============ CLOSING ============
   { sel: '.closing-headline', html: 'Play.<br><span class="gradient">That\'s how it starts.</span>' },
-  { sel: '.closing-sub', html: "Start now. Perfect later. — it's really fun." },
+  { sel: '.closing-sub', html: "Start now. Perfect later. It's genuinely fun." },
 ];
