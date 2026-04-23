@@ -17,21 +17,21 @@ window.DTL_EN = [
   // ============ TTCAT QUOTE ============
   { sel: '.quote-text', html:
     '<p>AI is reshaping most of work on this planet — ours included.</p>' +
-    '<p>In this wave, the only way to turn AI into a tool that feels natural in your hands is to have the resources — and the freedom — to actually play with it. Work, research, side projects, games, or just fixing something annoying in your daily life. We pay the bill.</p>' +
+    '<p>Right now, the only way to turn AI into a tool that feels natural in your hands is to have the resources — and the freedom — to actually play with it. Work, research, side projects, games, or just fixing something annoying in your daily life. We pay the bill.</p>' +
     "<p>Supporting every DTL teammate to grow and level up has always mattered to me. This is a defining moment — but no FOMO. The org has your back: budget, places to share, and a chance for us to learn together.</p>"
   },
 
   // ============ PRINCIPLES ============
   { sel: '#principles .section-title', html: 'One spirit,<br>four angles.' },
-  { sel: '#principles .section-sub', text: 'Simple as that — make real things, share them, allow failure, let contribution be seen.' },
-  { sel: '#principles .principle:nth-child(1) .principle-title', text: 'Make real things' },
+  { sel: '#principles .section-sub', text: 'Simple as that — make it work for you first, share it, tell us when it flops, great work gets paid.' },
+  { sel: '#principles .principle:nth-child(1) .principle-title', text: 'Make it work for you first' },
   { sel: '#principles .principle:nth-child(1) .principle-body', text: "We fund the exploring. We reward the shipping." },
-  { sel: '#principles .principle:nth-child(2) .principle-title', text: 'Share it out' },
-  { sel: '#principles .principle:nth-child(2) .principle-body', text: 'A good trick benefits the whole team — and earns you more.' },
-  { sel: '#principles .principle:nth-child(3) .principle-title', text: 'Failure is fine' },
+  { sel: '#principles .principle:nth-child(2) .principle-title', text: 'Share it' },
+  { sel: '#principles .principle:nth-child(2) .principle-body', text: 'A good trick benefits the whole team — and pays more.' },
+  { sel: '#principles .principle:nth-child(3) .principle-title', text: "Didn't work? Tell us." },
   { sel: '#principles .principle:nth-child(3) .principle-body', html: 'Hitting walls is a contribution too — sharing what you learned from it is the <em>best</em> kind.' },
   { sel: '#principles .principle:nth-child(4) .principle-title', text: 'Awards' },
-  { sel: '#principles .principle:nth-child(4) .principle-body', text: 'Real value gets seen — and earns real rewards.' },
+  { sel: '#principles .principle:nth-child(4) .principle-body', text: 'Real value gets seen — and paid.' },
 
   // ============ LEVELS OVERVIEW ============
   { sel: '#levels .section-title', html: 'Four stages.<br>Start wherever you want.' },
@@ -134,7 +134,7 @@ window.DTL_EN = [
   { sel: '#judges .review-cell:nth-of-type(4) .review-who', html: 'CEO + manager<br>decide together' },
 
   // ============ CULTURE ============
-  { sel: '#culture .section-title', html: "We reward the play.<br>We reward the results. No performing required." },
+  { sel: '#culture .section-title', html: "We reward playing. We reward results.<br>No need to put on a show." },
   { sel: '#culture .culture-col.yes .culture-col-label', text: 'Yes to these' },
   { sel: '#culture .culture-col.no .culture-col-label', text: "No thanks" },
   { sel: '#culture .culture-col.yes .culture-list li:nth-child(1)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Reinventing a better wheel is totally fine' },
@@ -143,7 +143,7 @@ window.DTL_EN = [
   { sel: '#culture .culture-col.yes .culture-list li:nth-child(4)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Small things are good things too' },
   { sel: '#culture .culture-col.yes .culture-list li:nth-child(5)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>We want to hear about failures too' },
   { sel: '#culture .culture-col.no .culture-list li:nth-child(1)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>Waiting for someone to teach you' },
-  { sel: '#culture .culture-col.no .culture-list li:nth-child(2)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>The pressure of "the boss says learn AI"' },
+  { sel: '#culture .culture-col.no .culture-list li:nth-child(2)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>Learning AI just because the boss said so' },
   { sel: '#culture .culture-col.no .culture-list li:nth-child(3)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>Doing it just to win the award' },
   { sel: '#culture .culture-col.no .culture-list li:nth-child(4)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>Pure AI slop you never actually used' },
   { sel: '#culture .culture-col.no .culture-list li:nth-child(5)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>Results that can\'t be verified' },
