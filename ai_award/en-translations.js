@@ -18,18 +18,18 @@ window.DTL_EN = [
   { sel: '.quote-text', html:
     '<p>AI is reshaping most of work on this planet — ours included.</p>' +
     '<p>In this wave, the only way to turn AI into a tool that feels natural in your hands is to have the resources — and the freedom — to actually play with it. Work, research, side projects, games, or just fixing something annoying in your daily life. We pay the bill.</p>' +
-    "<p>Supporting every DTL teammate to grow and level up has always mattered to me. This is a defining moment — but no FOMO. The org has your back: budget, stages to share, and a chance for us to learn together.</p>"
+    "<p>Supporting every DTL teammate to grow and level up has always mattered to me. This is a defining moment — but no FOMO. The org has your back: budget, places to share, and a chance for us to learn together.</p>"
   },
 
   // ============ PRINCIPLES ============
-  { sel: '#principles .section-title', html: 'One spirit.<br>Four sides to it.' },
-  { sel: '#principles .section-sub', text: 'Simple as that — make real things, share them out, allow failure, let contribution be seen.' },
+  { sel: '#principles .section-title', html: 'One spirit,<br>four angles.' },
+  { sel: '#principles .section-sub', text: 'Simple as that — make real things, share them, allow failure, let contribution be seen.' },
   { sel: '#principles .principle:nth-child(1) .principle-title', text: 'Make real things' },
   { sel: '#principles .principle:nth-child(1) .principle-body', text: "We fund the exploring. We reward the shipping." },
   { sel: '#principles .principle:nth-child(2) .principle-title', text: 'Share it out' },
   { sel: '#principles .principle:nth-child(2) .principle-body', text: 'A good trick benefits the whole team — and earns you more.' },
   { sel: '#principles .principle:nth-child(3) .principle-title', text: 'Failure is fine' },
-  { sel: '#principles .principle:nth-child(3) .principle-body', html: 'Hitting walls is a contribution too — sharing it is the <em>best</em> kind.' },
+  { sel: '#principles .principle:nth-child(3) .principle-body', html: 'Hitting walls is a contribution too — sharing what you learned from it is the <em>best</em> kind.' },
   { sel: '#principles .principle:nth-child(4) .principle-title', text: 'The Good Stuff Awards' },
   { sel: '#principles .principle:nth-child(4) .principle-body', text: 'Real value gets seen — and earns real rewards.' },
 
