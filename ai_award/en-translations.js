@@ -68,12 +68,12 @@ window.DTL_EN = [
   { sel: '#lv1 .ld-field:nth-of-type(1) .ld-field-body', html: '1–3 sentences — which tool, what you want to do, how long. <strong>Does not have to be work-related.</strong>' },
   { sel: '#lv1 .ld-field:nth-of-type(2) .ld-field-label', text: 'What we cover' },
   { sel: '#lv1 .ld-field:nth-of-type(2) .ld-field-body', html: 'Tool subscriptions, initially covered for <strong>1–3 months</strong> depending on your needs.' },
-  { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-label', text: "Your part — a quick writeup" },
-  { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-body', html: 'Tell the team what you did, whether the tool is any good, and how to get the most out of it. Share both within your team and org-wide:<ul><li>what you used it for</li><li>what works, what doesn\'t</li><li>whether it\'s worth renewing</li><li>whether you\'d recommend it to colleagues</li></ul><div class="ld-note">Share before you apply for the next round — that way the budget actually creates value.</div>' },
+  { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-label', text: "Your part — share at our online meetings" },
+  { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-body', html: 'Share at our online meetings, both team and org-wide — what you did, whether the tool is any good, and how to get the most out of it:<ul><li>what you used it for</li><li>what works, what doesn\'t</li><li>whether it\'s worth renewing</li><li>whether you\'d recommend it to colleagues</li></ul><div class="ld-note">Share before you apply for the next round — that way the budget actually creates value.</div>' },
 
   // ============ L2 DETAIL ============
   { sel: '#lv2 .ld-title', text: 'Contributor' },
-  { sel: '#lv2 .ld-intro', html: "<strong>L1 is you playing around.<br>L2 is turning what you figured out into something the team can use.</strong>" },
+  { sel: '#lv2 .ld-intro', html: "<strong>L1 is you playing around.<br>L2 is turning what you figured out into something other people can reuse.</strong>" },
   { sel: '#lv2 .ld-field:nth-of-type(1) .ld-field-label', text: 'Any source counts' },
   { sel: '#lv2 .ld-field:nth-of-type(1) .ld-field-body', html: 'Prompt tricks or workflows you picked up while making games, editing video, or doing your taxes — as long as what you write up <strong>helps other DTL folks</strong>, it counts.<p style="color: var(--text-3); font-size: 13px; margin-top: 12px;">Example: you learned how to get a model to reliably output JSON while building a game → you write that up for researchers → totally counts.</p>' },
   { sel: '#lv2 .ld-field:nth-of-type(2) .ld-field-label', text: 'Format · one plus one' },
@@ -154,9 +154,9 @@ window.DTL_EN = [
   { sel: '#cadence .cadence-cell:nth-of-type(1) .cadence-big', text: 'Monthly' },
   { sel: '#cadence .cadence-cell:nth-of-type(1) .cadence-list', html: 'Applications open · share sessions<br>Published case studies' },
   { sel: '#cadence .cadence-cell:nth-of-type(2) .cadence-big', text: 'Quarterly' },
-  { sel: '#cadence .cadence-cell:nth-of-type(2) .cadence-list', html: 'Review outcomes, adjust the plan<br>MVP recognition' },
+  { sel: '#cadence .cadence-cell:nth-of-type(2) .cadence-list', html: 'Review outcomes, tune the program rules<br>MVP recognition' },
   { sel: '#cadence .cadence-cell:nth-of-type(3) .cadence-big', text: 'Annually' },
-  { sel: '#cadence .cadence-cell:nth-of-type(3) .cadence-list', html: 'Legend awards ceremony<br>Year-end retrospective' },
+  { sel: '#cadence .cadence-cell:nth-of-type(3) .cadence-list', html: 'Pioneer awards ceremony<br>Year-end retrospective' },
 
   // ============ POLICY ============
   { sel: '#policy .section-title', html: 'Before you start,<br>read this.' },
