@@ -9,7 +9,7 @@ window.DTL_EN = [
 
   // ============ HERO ============
   { sel: '.hero-eyebrow', html: '<span class="hero-eyebrow-dot"></span>DTL AI Teammate Program' },
-  { sel: '.hero-title', html: 'Play with AI.<br><span class="gradient">Mess around</span>.' },
+  { sel: '.hero-title', html: 'Play with AI.<br><span class="gradient">Make fun stuff</span>.' },
   { sel: '.hero-sub', html: "Your idea, our budget. Start today.<br>" },
   { sel: '.hero-cta-row .btn-primary', html: 'Start <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' },
   { sel: '.hero-cta-row .btn-ghost', text: 'See Level 1 first' },
