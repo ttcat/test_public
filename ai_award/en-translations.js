@@ -88,7 +88,7 @@ window.DTL_EN = [
   { sel: '#lv2 .rubric thead th:nth-child(2)', text: 'Pts' },
   { sel: '#lv2 .rubric thead th:nth-child(3)', text: 'What we look for' },
   { sel: '#lv2 .rubric tbody tr:nth-child(1) td:nth-child(1)', text: 'Usefulness' },
-  { sel: '#lv2 .rubric tbody tr:nth-child(1) td:nth-child(3)', text: '3 = teammates can use it as-is' },
+  { sel: '#lv2 .rubric tbody tr:nth-child(1) td:nth-child(3)', text: '3 = many people share the same need' },
   { sel: '#lv2 .rubric tbody tr:nth-child(2) td:nth-child(1)', text: 'Reproducible' },
   { sel: '#lv2 .rubric tbody tr:nth-child(2) td:nth-child(3)', text: '3 = full steps / prompts / templates' },
   { sel: '#lv2 .rubric tbody tr:nth-child(3) td:nth-child(1)', text: 'Clarity' },
