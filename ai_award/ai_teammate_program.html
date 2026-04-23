@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 神隊友計畫 · Doublethink Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Surfaces */
+  --black: #000000;
+  --surface-1: #0a0a0c;
+  --surface-2: #141418;
+  --surface-3: #1c1c22;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  /* Text */
+  --text: #ffffff;
+  --text-2: rgba(255, 255, 255, 0.72);
+  --text-3: rgba(255, 255, 255, 0.48);
+  --text-4: rgba(255, 255, 255, 0.28);
+
+  /* Neon accents — cross-referenced across sections */
+  --neon-pink: #ff2d9c;
+  --neon-violet: #a855f7;
+  --neon-blue: #3b82f6;
+  --neon-cyan: #22d3ee;
+  --neon-lime: #a3e635;
+  --neon-amber: #fbbf24;
+
+  /* Gradients */
+  --grad-primary: linear-gradient(135deg, #ff2d9c 0%, #a855f7 50%, #3b82f6 100%);
+  --grad-lv1: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%);
+  --grad-lv2: linear-gradient(135deg, #a3e635 0%, #22d3ee 100%);
+  --grad-lv3: linear-gradient(135deg, #fbbf24 0%, #ff2d9c 100%);
+  --grad-lv4: linear-gradient(135deg, #ff2d9c 0%, #a855f7 100%);
+
+  --font: 'Noto Sans TC', 'Inter', -apple-system, system-ui, sans-serif;
+  --font-en: 'Inter', -apple-system, system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--black);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  font-weight: 400;
+  position: relative;
+  letter-spacing: -0.003em;
+}
+
+::selection { background: var(--neon-pink); color: var(--black); }
+
+/* ============ AMBIENT BACKGROUND ============ */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.bg::before,
+.bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.25;
+}
+.bg::before {
+  width: 600px;
+  height: 600px;
+  background: var(--neon-pink);
+  top: -200px;
+  left: -100px;
+  animation: drift 30s ease-in-out infinite;
+}
+.bg::after {
+  width: 700px;
+  height: 700px;
+  background: var(--neon-violet);
+  top: 40%;
+  right: -200px;
+  animation: drift 40s ease-in-out infinite reverse;
+}
+.bg-third {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: var(--neon-blue);
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.18;
+  bottom: 10%;
+  left: 20%;
+  animation: drift 35s ease-in-out infinite;
+  animation-delay: -10s;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -60px) scale(1.15); }
+  66% { transform: translate(-30px, 40px) scale(0.9); }
+}
+
+/* Subtle grain for depth */
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+}
+
+.container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============ NAV ============ */
+.nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  background: rgba(10, 10, 12, 0.7);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 8px 8px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+.nav-brand {
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.nav-dot {
+  color: var(--text-4);
+}
+.nav-links {
+  display: flex;
+  gap: 2px;
+}
+.nav-links a {
+  color: var(--text-2);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ============ HERO ============ */
+.hero {
+  padding: 180px 0 140px;
+  text-align: center;
+  position: relative;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-2);
+  padding: 6px 14px 6px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  margin-bottom: 40px;
+}
+.hero-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--grad-primary);
+  box-shadow: 0 0 12px rgba(255, 45, 156, 0.8);
+}
+
+.hero-title {
+  font-size: clamp(56px, 9vw, 128px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 28px;
+}
+.hero-title .gradient {
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.hero-sub {
+  font-size: clamp(18px, 2vw, 22px);
+  max-width: 620px;
+  margin: 0 auto 56px;
+  color: var(--text-2);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.hero-cta-row {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--text);
+  color: var(--black);
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--border-strong);
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.24); }
+
+/* ============ CEO QUOTE ============ */
+.quote-wrap {
+  margin-top: 120px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+.quote-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 20px;
+}
+.quote-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--text-4);
+}
+.quote-text {
+  font-size: 22px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.quote-text p + p { margin-top: 16px; }
+.quote-sig {
+  margin-top: 24px;
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+/* ============ SECTION BASE ============ */
+.section {
+  padding: 140px 0;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .section { padding: 80px 0; }
+  .hero { padding: 120px 0 80px; }
+}
+
+.section-eyebrow {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: transparent;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.section-title {
+  font-size: clamp(40px, 5.5vw, 72px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin-bottom: 24px;
+  max-width: 800px;
+}
+
+.section-sub {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 600px;
+  font-weight: 400;
+}
+
+/* ============ PRINCIPLES ============ */
+.principles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  margin-top: 64px;
+}
+
+.principle {
+  background: var(--surface-1);
+  padding: 40px 32px;
+  position: relative;
+  transition: background 0.3s ease;
+}
+.principle:hover { background: var(--surface-2); }
+
+.principle-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+.principle-icon svg { width: 22px; height: 22px; stroke-width: 1.5; }
+
+.principle:nth-child(1) .principle-icon { color: var(--neon-cyan); }
+.principle:nth-child(2) .principle-icon { color: var(--neon-lime); }
+.principle:nth-child(3) .principle-icon { color: var(--neon-amber); }
+.principle:nth-child(4) .principle-icon { color: var(--neon-pink); }
+
+.principle-title {
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.principle-body {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+/* ============ LEVEL SELECT ============ */
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 64px;
+}
+
+.level-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 24px 24px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s;
+}
+.level-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  opacity: 0.9;
+}
+.level-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+}
+
+.level-card.lv1::before { background: var(--grad-lv1); }
+.level-card.lv2::before { background: var(--grad-lv2); }
+.level-card.lv3::before { background: var(--grad-lv3); }
+.level-card.lv4::before { background: var(--grad-lv4); }
+
+.level-card .lv-tag {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+.level-card.lv1 .lv-tag { color: var(--neon-cyan); }
+.level-card.lv2 .lv-tag { color: var(--neon-lime); }
+.level-card.lv3 .lv-tag { color: var(--neon-amber); }
+.level-card.lv4 .lv-tag { color: var(--neon-pink); }
+
+.lv-name {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  line-height: 1.1;
+}
+.lv-purpose {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 24px;
+  min-height: 40px;
+}
+.lv-reward-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+.lv-reward-line .label { color: var(--text-3); font-family: var(--font-en); font-weight: 500; }
+.lv-reward-line .value { color: var(--text); font-weight: 600; font-family: var(--font-en); }
+
+/* ============ LEVEL DETAIL ============ */
+.level-detail {
+  margin-top: 80px;
+  padding-top: 80px;
+  border-top: 1px solid var(--border);
+}
+.level-detail:first-of-type { border-top: none; padding-top: 0; }
+
+.ld-header {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+.ld-number {
+  font-family: var(--font-en);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+}
+.ld-number.lv1-tag { color: var(--neon-cyan); border-color: rgba(34, 211, 238, 0.3); }
+.ld-number.lv2-tag { color: var(--neon-lime); border-color: rgba(163, 230, 53, 0.3); }
+.ld-number.lv3-tag { color: var(--neon-amber); border-color: rgba(251, 191, 36, 0.3); }
+.ld-number.lv4-tag { color: var(--neon-pink); border-color: rgba(255, 45, 156, 0.3); }
+
+.ld-title {
+  font-size: clamp(36px, 4.5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  flex: 1;
+  min-width: 200px;
+}
+.ld-reward {
+  font-family: var(--font-en);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.ld-intro {
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--text-2);
+  margin-bottom: 48px;
+  max-width: 680px;
+  font-weight: 400;
+}
+.ld-intro strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.ld-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.ld-grid.single { grid-template-columns: 1fr; max-width: 720px; }
+
+.ld-field {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+}
+.ld-field-label {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+.ld-field-body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.ld-field-body p + p { margin-top: 8px; }
+.ld-field-body ol, .ld-field-body ul {
+  padding-left: 20px;
+  margin-top: 4px;
+}
+.ld-field-body li {
+  margin-bottom: 4px;
+  color: var(--text-2);
+}
+.ld-field-body li strong { color: var(--text); font-weight: 500; }
+.ld-field-body strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.ld-note {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 2px solid var(--text-4);
+  border-radius: 0 8px 8px 0;
+  line-height: 1.55;
+}
+
+/* ============ FREEDOM BLOCK (L1) ============ */
+.freedom {
+  position: relative;
+  padding: 48px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+.freedom::before {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: var(--neon-cyan);
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  top: -200px;
+  right: -100px;
+}
+.freedom-inner { position: relative; }
+
+.freedom-label {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+  margin-bottom: 16px;
+}
+
+.freedom-title {
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.freedom-body {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 680px;
+  margin-bottom: 28px;
+}
+.freedom-body strong { color: var(--text); font-weight: 500; }
+
+.freedom-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.freedom-tag {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text-2);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* ============ RUBRIC TABLE ============ */
+.rubric {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 8px;
+}
+.rubric th {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  text-align: left;
+  padding: 0 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.rubric td {
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+.rubric tr:last-child td { border-bottom: none; }
+.rubric td:first-child { color: var(--text); font-weight: 500; width: 100px; }
+.rubric td:nth-child(2) {
+  font-family: var(--font-en);
+  color: var(--neon-amber);
+  font-weight: 600;
+  width: 60px;
+}
+
+/* ============ REWARD PAIR ============ */
+.reward-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+.reward-pill {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+}
+.reward-pill.highlight {
+  border-color: rgba(251, 191, 36, 0.3);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(255, 45, 156, 0.08));
+}
+.reward-pill .rp-label {
+  font-size: 12px;
+  color: var(--text-3);
+  font-family: var(--font-en);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.reward-pill.highlight .rp-label { color: var(--neon-amber); }
+.reward-pill .rp-value {
+  font-family: var(--font-en);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+/* ============ TIERS (L3) ============ */
+.tiers-wrap { margin-top: 48px; }
+.tiers-label {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 20px;
+}
+
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.tier {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 20px;
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.tier:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+}
+.tier .tier-accent {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+.tier.t1 .tier-accent { background: var(--neon-cyan); }
+.tier.t2 .tier-accent { background: var(--neon-lime); }
+.tier.t3 .tier-accent { background: var(--grad-lv3); }
+.tier.t4 .tier-accent { background: var(--grad-lv4); }
+
+.tier-name {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+.tier-criteria {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 24px;
+  min-height: 58px;
+}
+.tier-amount {
+  font-family: var(--font-en);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+/* ============ ANTI-GAMING ============ */
+.integrity {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  padding: 80px 64px;
+  position: relative;
+  overflow: hidden;
+}
+.integrity::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: var(--neon-pink);
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.1;
+  bottom: -200px;
+  right: -150px;
+}
+.integrity-inner { position: relative; z-index: 1; }
+
+.integrity .section-eyebrow { background: linear-gradient(135deg, var(--neon-pink), var(--neon-violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+.bad-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin-top: 48px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--border);
+  gap: 1px;
+}
+.bad-item {
+  background: var(--surface-2);
+  padding: 20px 24px;
+  font-size: 15px;
+  color: var(--text);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.bad-item svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+  color: var(--neon-pink);
+  margin-top: 2px;
+}
+
+.penalty {
+  margin-top: 32px;
+  padding: 24px 28px;
+  background: linear-gradient(135deg, rgba(255, 45, 156, 0.1), rgba(168, 85, 247, 0.1));
+  border: 1px solid rgba(255, 45, 156, 0.3);
+  border-radius: 16px;
+}
+.penalty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.penalty-title svg { width: 18px; height: 18px; stroke-width: 2; color: var(--neon-pink); }
+.penalty-body {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* ============ REVIEW ============ */
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.review-cell {
+  background: var(--surface-1);
+  padding: 32px 24px;
+  text-align: left;
+}
+.review-lv {
+  font-family: var(--font-en);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+.review-cell:nth-child(1) .review-lv { color: var(--neon-cyan); }
+.review-cell:nth-child(2) .review-lv { color: var(--neon-lime); }
+.review-cell:nth-child(3) .review-lv { color: var(--neon-amber); }
+.review-cell:nth-child(4) .review-lv { color: var(--neon-pink); }
+
+.review-who {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.review-note {
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 1.6;
+}
+.review-note strong { color: var(--text); font-weight: 500; }
+
+/* ============ CULTURE ============ */
+.culture-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 48px;
+}
+.culture-col {
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  position: relative;
+}
+.culture-col.yes {
+  background: linear-gradient(135deg, rgba(163, 230, 53, 0.06), rgba(34, 211, 238, 0.06));
+  border-color: rgba(163, 230, 53, 0.2);
+}
+.culture-col-label {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.culture-col.yes .culture-col-label { color: var(--neon-lime); }
+.culture-col.no .culture-col-label { color: var(--text-3); }
+
+.culture-list {
+  list-style: none;
+}
+.culture-list li {
+  padding: 14px 0;
+  font-size: 17px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text);
+}
+.culture-list li:last-child { border-bottom: none; }
+.culture-list li svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+}
+.culture-col.yes li svg { color: var(--neon-lime); }
+.culture-col.no li svg { color: var(--text-3); }
+.culture-col.no li { color: var(--text-2); }
+
+/* ============ CADENCE ============ */
+.cadence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.cadence-cell {
+  background: var(--surface-1);
+  padding: 40px 32px;
+}
+.cadence-when {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: transparent;
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-bottom: 12px;
+}
+.cadence-big {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+.cadence-list {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+}
+
+/* ============ CLOSING ============ */
+.closing {
+  text-align: center;
+  padding: 160px 0 200px;
+  position: relative;
+}
+
+.closing-headline {
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  max-width: 900px;
+  margin: 0 auto 32px;
+}
+.closing-headline .gradient {
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.closing-sub {
+  font-size: 20px;
+  color: var(--text-2);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* ============ FOOTER ============ */
+.footer {
+  padding: 40px 32px 48px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-3);
+  display: flex;
+  justify-content: space-between;
+  max-width: 1160px;
+  margin: 0 auto;
+  font-family: var(--font-en);
+}
+
+/* ============ SCROLL REVEAL ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 960px) {
+  .container { padding: 0 20px; }
+  .nav { padding: 6px 6px 6px 16px; font-size: 12px; }
+  .nav-links a { padding: 6px 10px; }
+  .principles { grid-template-columns: repeat(2, 1fr); }
+  .level-grid { grid-template-columns: repeat(2, 1fr); }
+  .ld-grid { grid-template-columns: 1fr; }
+  .tiers { grid-template-columns: repeat(2, 1fr); }
+  .bad-list { grid-template-columns: 1fr; }
+  .review-grid { grid-template-columns: repeat(2, 1fr); }
+  .culture-grid { grid-template-columns: 1fr; }
+  .cadence-grid { grid-template-columns: 1fr; }
+  .integrity { padding: 48px 28px; border-radius: 24px; }
+  .freedom { padding: 32px 24px; }
+  .culture-col { padding: 28px; }
+  .cadence-cell { padding: 32px 24px; }
+  .footer { flex-direction: column; gap: 12px; padding: 32px 20px; }
+}
+@media (max-width: 540px) {
+  .hero-title { font-size: 56px; }
+  .principles { grid-template-columns: 1fr; }
+  .level-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .nav { padding: 6px 16px; }
+}
+
+/* ============ AI SERVICES ============ */
+.services-intro {
+  margin-top: 24px;
+  font-size: 17px;
+  color: var(--text-2);
+  max-width: 680px;
+  line-height: 1.6;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  margin-top: 56px;
+}
+a.service-cell {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.service-cell {
+  background: var(--surface-1);
+  padding: 28px 24px;
+  transition: background 0.25s ease;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 8px;
+  min-height: 172px;
+}
+.service-cell:hover { background: var(--surface-2); }
+.service-cat {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.service-cell.c-chat .service-cat { color: var(--neon-cyan); }
+.service-cell.c-image .service-cat { color: var(--neon-pink); }
+.service-cell.c-video .service-cat { color: var(--neon-violet); }
+.service-cell.c-music .service-cat { color: var(--neon-lime); }
+.service-cell.c-audio .service-cat { color: var(--neon-amber); }
+.service-cell.c-code .service-cat { color: var(--neon-blue); }
+.service-cell.c-write .service-cat { color: var(--neon-cyan); }
+.service-cell.c-design .service-cat { color: var(--neon-pink); }
+.service-cell.c-agent .service-cat { color: var(--neon-violet); }
+.service-cell.c-research .service-cat { color: var(--neon-amber); }
+.service-name {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  min-height: 24px;
+}
+.service-desc {
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.5;
+  padding-top: 10px;
+  align-self: start;
+}
+.services-note {
+  margin-top: 32px;
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 1.6;
+  max-width: 620px;
+}
+@media (max-width: 960px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .services-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="bg-third"></div>
+</div>
+<div class="bg-grain"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-brand">Doublethink Lab</span>
+  <span class="nav-dot">·</span>
+  <div class="nav-links">
+    <a href="#levels">關卡</a>
+    <a href="#culture">文化</a>
+    <a href="#services">開始</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      AI 神隊友計畫
+    </div>
+    <h1 class="hero-title">
+      和 AI 一起<br><span class="gradient">做點好玩的</span>。
+    </h1>
+    <p class="hero-sub">
+      你的想法，我們出錢。不用等準備好，開始就對了。<br>
+    </p>
+    <div class="hero-cta-row">
+      <a href="#levels" class="btn-primary">
+        開始
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#lv1" class="btn-ghost">先看 Level 1</a>
+    </div>
+
+    <div class="quote-wrap">
+      <div class="quote-label">TTCAT</div>
+      <div class="quote-text">
+        <p>AI 正在改變這個世界上每一種工作的樣貌。</p>
+        <p>在 AI 科技衝擊的當下，有充分的資源、毫無後顧之憂的去玩、去練習，才能把 AI 變成自己順手的工具——不管是用在工作、研究、副業，還是自己生活裡的一件事。</p>
+        <p>我希望 DTL 的每一位夥伴，都能夠在這份工作中得到能力的提升和成長。組織將透過這個計劃作為你的後盾，提供資源、分享的舞台，讓大家一起「玩」得開心。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="section">
+  <div class="container reveal">
+    <div class="section-eyebrow">Spirit</div>
+    <h2 class="section-title">一種精神,<br>四個面向。</h2>
+    <p class="section-sub">這個計畫很簡單——做真的事、分享出來、允許失敗、讓貢獻被看見。</p>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h3 class="principle-title">做真的事</h3>
+        <p class="principle-body">補助嘗試，獎勵成果。</p>
+      </div>
+      <div class="principle">
+        <div class="principle-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg>
+        </div>
+        <h3 class="principle-title">分享出來</h3>
+        <p class="principle-body">好的方法要讓團隊一起受益。</p>
+      </div>
+      <div class="principle">
+        <div class="principle-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+        </div>
+        <h3 class="principle-title">允許失敗</h3>
+        <p class="principle-body">踩雷經驗也是貢獻，願意分享就是「最好」。</p>
+      </div>
+      <div class="principle">
+        <div class="principle-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+        </div>
+        <h3 class="principle-title">有料大賞</h3>
+        <p class="principle-body">真正有價值的貢獻會被看見，也會被獎勵。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEVEL SELECT -->
+<section class="section" id="levels">
+  <div class="container reveal">
+    <div class="section-eyebrow">Four Levels</div>
+    <h2 class="section-title">四個階段,<br>想從哪裡開始都行。</h2>
+    <p class="section-sub">不需依序闖關，已經很熟 AI 工具的夥伴可以直接申請 L2 或 L3。</p>
+
+    <div class="level-grid">
+      <a href="#lv1" class="level-card lv1">
+        <div class="lv-tag">LV 01 · EXPLORER</div>
+        <div class="lv-name">探索者</div>
+        <div class="lv-purpose">開始用 AI，做什麼都行。</div>
+        <div class="lv-reward-line">
+          <span class="label">REWARD</span>
+          <span class="value">工具用多少補多少</span>
+        </div>
+      </a>
+      <a href="#lv2" class="level-card lv2">
+        <div class="lv-tag">LV 02 · CONTRIBUTOR</div>
+        <div class="lv-name">貢獻者</div>
+        <div class="lv-purpose">把經驗整理成團隊能用的資產。</div>
+        <div class="lv-reward-line">
+          <span class="label">REWARD</span>
+          <span class="value">NT$ 5K – 10K</span>
+        </div>
+      </a>
+      <a href="#lv3" class="level-card lv3">
+        <div class="lv-tag">LV 03 · BUILDER</div>
+        <div class="lv-name">創造者</div>
+        <div class="lv-purpose">把 AI 加進你的工作流程，創造可驗證的成果。</div>
+        <div class="lv-reward-line">
+          <span class="label">REWARD</span>
+          <span class="value">NT$ 20K – 150K</span>
+        </div>
+      </a>
+      <a href="#lv4" class="level-card lv4">
+        <div class="lv-tag">LV 04 · LEGEND</div>
+        <div class="lv-name">年度傳說</div>
+        <div class="lv-purpose">改變組織的工作方式。</div>
+        <div class="lv-reward-line">
+          <span class="label">REWARD</span>
+          <span class="value">NT$ 200K+</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- LEVEL DETAILS -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+
+    <!-- L1 -->
+    <div class="level-detail reveal" id="lv1">
+      <div class="ld-header">
+        <span class="ld-number lv1-tag">LV 01 · EXPLORER</span>
+        <h3 class="ld-title">探索者</h3>
+        <span class="ld-reward">工具用多少補多少</span>
+      </div>
+
+      <p class="ld-intro">
+        想試什麼 AI 工具，跟我們說一聲，我們出錢。只要讓你能開始用、盡情用。
+      </p>
+
+      <div class="freedom">
+        <div class="freedom-inner">
+          <div class="freedom-label">最重要的事</div>
+          <h4 class="freedom-title">拿來做什麼都可以。</h4>
+          <p class="freedom-body">
+            三個月工具補助，用多少，補多少。不一定要用在工作。做 side project、做動畫影片、寫小說、做遊戲、學語言、幫自己算報稅、排行程，或想一口氣嘗試多套工具？通通 OK！我們買單。我們相信：你敢玩，才會真的能學會用。
+          </p>
+          <div class="freedom-tags">
+            <span class="freedom-tag">做遊戲</span>
+            <span class="freedom-tag">做影片</span>
+            <span class="freedom-tag">寫小說</span>
+            <span class="freedom-tag">算報稅</span>
+            <span class="freedom-tag">學語言</span>
+            <span class="freedom-tag">做插畫</span>
+            <span class="freedom-tag">排行程</span>
+            <span class="freedom-tag">寫歌詞</span>
+            <span class="freedom-tag">你自己想的任何事</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ld-grid">
+        <div class="ld-field">
+          <div class="ld-field-label">怎麼申請</div>
+          <div class="ld-field-body">
+            1–3 句話說明——哪個工具、想做什麼、試多久。<strong>不必要工作有關</strong>。
+          </div>
+        </div>
+        <div class="ld-field">
+          <div class="ld-field-label">組織提供</div>
+          <div class="ld-field-body">
+            工具訂閱費，依需求第一次補助 <strong>1–3 個月</strong>。
+          </div>
+        </div>
+        <div class="ld-field" style="grid-column: 1 / -1;">
+          <div class="ld-field-label">你的義務 — 簡短回報</div>
+          <div class="ld-field-body">
+            把你做了什麼、工具好不好用、怎麼才好用告訴大家。在內部與全組織分享：
+            <ul>
+              <li>你拿來做什麼</li>
+              <li>好用 / 不好用在哪</li>
+              <li>值不值得再花錢續訂</li>
+              <li>推不推薦給其他同事</li>
+            </ul>
+            <div class="ld-note">先分享完再申請下一期！讓組織的錢花得有意義。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- L2 -->
+    <div class="level-detail reveal" id="lv2">
+      <div class="ld-header">
+        <span class="ld-number lv2-tag">LV 02 · CONTRIBUTOR</span>
+        <h3 class="ld-title">貢獻者</h3>
+        <span class="ld-reward">NT$ 5K – 10K</span>
+      </div>
+
+      <p class="ld-intro">
+        <strong>L1 是你自己玩，<br>L2 是你把玩出來的東西整理成團隊能用的東西。</strong>
+      </p>
+
+      <div class="ld-grid">
+        <div class="ld-field">
+          <div class="ld-field-label">來源不限</div>
+          <div class="ld-field-body">
+            你在做遊戲、剪影片、算報稅時練到的 prompt 技巧或工作流，只要整理出來<strong>對 DTL 同事有幫助</strong>，就算。
+            <p style="color: var(--text-3); font-size: 13px; margin-top: 12px;">例：你用 AI 做遊戲學到「讓模型穩定輸出 JSON」的方法 → 整理給研究員用 → 完全符合。</p>
+          </div>
+        </div>
+        <div class="ld-field">
+          <div class="ld-field-label">形式 · 擇一</div>
+          <div class="ld-field-body">
+            全組織線上分享會
+＋
+部門分享 · 教學文件 · 網頁或簡報 · 錄影 Demo · 案例文章
+
+
+          </div>
+        </div>
+        <div class="ld-field">
+          <div class="ld-field-label">內容必備</div>
+          <div class="ld-field-body">
+            <ol>
+              <li>原本想解決的問題</li>
+              <li>用了哪些工具和方法</li>
+              <li>實際成果</li>
+              <li>限制與注意事項</li>
+              <li>給同事的具體建議</li>
+            </ol>
+          </div>
+        </div>
+        <div class="ld-field">
+          <div class="ld-field-label">評分 · 總分 10</div>
+          <div class="ld-field-body">
+            <table class="rubric">
+              <thead>
+                <tr><th>項目</th><th>分</th><th>準則</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>實用性</td><td>0–3</td><td>3 = 同事直接能用</td></tr>
+                <tr><td>可複製</td><td>0–3</td><td>3 = 完整步驟 / prompt / 範本</td></tr>
+                <tr><td>清晰度</td><td>0–2</td><td>2 = 結構清楚、範例具體</td></tr>
+                <tr><td>真實度</td><td>0–2</td><td>2 = 有踩雷、比較、反思</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="ld-field" style="grid-column: 1 / -1;">
+          <div class="ld-field-label">獎勵</div>
+          <div class="ld-field-body">
+            <div class="reward-pair">
+              <div class="reward-pill">
+                <div class="rp-label">合格 · 7 分以上</div>
+                <div class="rp-value">NT$ 5,000</div>
+              </div>
+              <div class="reward-pill highlight">
+                <div class="rp-label">優秀 · 9 分以上</div>
+                <div class="rp-value">NT$ 10,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- L3 -->
+    <div class="level-detail reveal" id="lv3">
+      <div class="ld-header">
+        <span class="ld-number lv3-tag">LV 03 · BUILDER</span>
+        <h3 class="ld-title">創造者</h3>
+        <span class="ld-reward">NT$ 20K – 150K</span>
+      </div>
+
+      <p class="ld-intro">
+        把 AI 真正加進你的工作流程，產出<strong>可驗證的成果</strong>。看數據、做長期，創造影響力。
+      </p>
+
+      <div class="ld-grid">
+        <div class="ld-field">
+          <div class="ld-field-label">適用成果類型</div>
+          <div class="ld-field-body">
+            節省工時 · 自動化流程 · 提升品質或速度 · 建立內部工具 · 降低外包成本 · 擴大研究或倡議能量 · 建立新工作模式
+          </div>
+        </div>
+        <div class="ld-field">
+          <div class="ld-field-label">提交內容</div>
+          <div class="ld-field-body">
+            <ol>
+              <li>問題背景</li>
+              <li>解決方案與實作細節</li>
+              <li><strong>實際成果證據</strong> (數據、截圖、回饋、before / after)</li>
+              <li>是否可擴大應用</li>
+            </ol>
+          </div>
+        </div>
+        <div class="ld-field">
+          <div class="ld-field-label">團隊申請</div>
+          <div class="ld-field-body">
+            2–5 人組隊闖關，自行指定分配比例
+          </div>
+        </div>
+        <div class="ld-field">
+          <div class="ld-field-label">長期驗證 · 跨部門級以上</div>
+          <div class="ld-field-body">
+            申請通過時先發 <strong>70%</strong>，3 個月後驗證持續運作，再發 <strong>30%</strong>。
+          </div>
+        </div>
+      </div>
+
+      <div class="tiers-wrap">
+        <div class="tiers-label">獎金分級 · 依影響範圍、解決問題的規模而定</div>
+        <div class="tiers">
+          <div class="tier t1">
+            <div class="tier-accent"></div>
+            <div class="tier-name">個人級</div>
+            <div class="tier-criteria">自己的工作流程改善，有具體數據。</div>
+            <div class="tier-amount">NT$ 20,000</div>
+          </div>
+          <div class="tier t2">
+            <div class="tier-accent"></div>
+            <div class="tier-name">部門級</div>
+            <div class="tier-criteria">至少 3 位同部門夥伴持續使用 ≥ 1 個月</div>
+            <div class="tier-amount">NT$ 25,000~50,000</div>
+          </div>
+          <div class="tier t3">
+            <div class="tier-accent"></div>
+            <div class="tier-name">跨部門級</div>
+            <div class="tier-criteria">至少 2 個部門使用 ≥ 1 個月</div>
+            <div class="tier-amount">NT$ 50,000~100,000</div>
+          </div>
+          <div class="tier t4">
+            <div class="tier-accent"></div>
+            <div class="tier-name">全組織級</div>
+            <div class="tier-criteria">已納入 SOP 或被多數同仁採用。</div>
+            <div class="tier-amount">NT$ 100,000~150,000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- L4 -->
+    <div class="level-detail reveal" id="lv4">
+      <div class="ld-header">
+        <span class="ld-number lv4-tag">LV 04 · LEGEND</span>
+        <h3 class="ld-title">年度傳說</h3>
+        <span class="ld-reward">NT$ 200K+</span>
+      </div>
+
+      <p class="ld-intro">
+        給那些<strong>真的改變了組織工作方式</strong>的一個人。每年一次，年末評選。
+
+      </p>
+
+      <div class="ld-grid">
+        <div class="ld-field">
+          <div class="ld-field-label">資格 · 需同時符合多數條件</div>
+          <div class="ld-field-body">
+            <ul>
+              <li>建立跨部門或全組織採用的 AI 系統</li>
+              <li>顯著提升整體效率(可量化)</li>
+              <li>開創新的研究方法、倡議形式或業務模式</li>
+              <li>建立可持續的長期能力體系</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ld-field">
+          <div class="ld-field-label">獎勵</div>
+          <div class="ld-field-body">
+            <ul>
+              <li>年度特別獎金 <strong>NT$ 200,000 起</strong></li>
+              <li>公開表揚</li>
+              <li>升遷 / 發展優先參考</li>
+              <li>職涯對談</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- REVIEW -->
+<section class="section">
+  <div class="container reveal">
+    <div class="section-eyebrow">Review</div>
+    <h2 class="section-title">誰負責評審？</h2>
+    <p class="section-sub">兩級評審：直屬主管 + CEO。</p>
+
+    <div class="review-grid">
+      <div class="review-cell">
+        <div class="review-lv">LV 01</div>
+        <div class="review-who">直屬主管審核</div>
+      </div>
+      <div class="review-cell">
+        <div class="review-lv">LV 02</div>
+        <div class="review-who">直屬主管審核</div>
+      </div>
+      <div class="review-cell">
+        <div class="review-lv">LV 03</div>
+        <div class="review-who">主管初評<br>CEO 終審</div>
+      </div>
+      <div class="review-cell">
+        <div class="review-lv">LV 04</div>
+        <div class="review-who">CEO + 主管<br>共同決定</div>
+      </div>
+    </div>
+
+    <p class="review-note">
+      
+    </p>
+  </div>
+</section>
+
+<!-- CULTURE -->
+<section class="section" id="culture">
+  <div class="container reveal">
+    <div class="section-eyebrow">Culture</div>
+    <h2 class="section-title">獎勵玩樂的過程<br>也獎勵成果，不需要表演。</h2>
+
+    <div class="culture-grid">
+      <div class="culture-col yes">
+        <div class="culture-col-label">這些我們很認同</div>
+        <ul class="culture-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            重複造輪子也沒關係，只要是更好的輪子
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            主動學習，還可以分享給同事
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            有 IDEA 就動手做
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            小東西也是好東西
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            失敗經驗我們也想聽
+          </li>
+        </ul>
+      </div>
+      <div class="culture-col no">
+        <div class="culture-col-label">這些我們沒興趣</div>
+        <ul class="culture-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            等別人來教我
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            老闆叫我學 AI 的壓力
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            為領獎而做
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            純 AI 生成、本人沒實際用過的內容
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            無法驗證的成果
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CADENCE -->
+<section class="section">
+  <div class="container reveal">
+    <div class="section-eyebrow">Rhythm</div>
+    <h2 class="section-title">這個計畫的節奏。</h2>
+
+    <div class="cadence-grid">
+      <div class="cadence-cell">
+        <div class="cadence-when">Monthly</div>
+        <div class="cadence-big">每月</div>
+        <div class="cadence-list">
+          開放申請、分享會<br>
+          公布通關案例
+        </div>
+      </div>
+      <div class="cadence-cell">
+        <div class="cadence-when">Quarterly</div>
+        <div class="cadence-big">每季</div>
+        <div class="cadence-list">
+          檢視成果，滾動調整計劃<br>
+          MVP 表揚
+        </div>
+      </div>
+      <div class="cadence-cell">
+        <div class="cadence-when">Annually</div>
+        <div class="cadence-big">每年</div>
+        <div class="cadence-list">
+          Legend 頒獎<br>
+          年度成果回顧
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<!-- AI SERVICES -->
+<section class="section" id="services">
+  <div class="container reveal">
+    <div class="section-eyebrow">Tools</div>
+    <h2 class="section-title">不只 ChatGPT、Gemini、<br>Claude、Grok。</h2>
+    <p class="services-intro">
+      AI 的發展超級快，從寫作、畫圖、做影片、做音樂，到寫程式、做 agent、做研究——都有對應的工具。這裡是 20 個值得試的服務，挑一個開始玩。
+    </p>
+
+    <div class="services-grid">
+      <a class="service-cell c-chat" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Chat / LLM</div>
+        <div class="service-name">ChatGPT</div>
+        <div class="service-desc">對話、寫作、分析、寫程式的全能入口。</a>
+      </div>
+      <a class="service-cell c-chat" href="https://claude.ai" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Chat / LLM</div>
+        <div class="service-name">Claude</div>
+        <div class="service-desc">長文理解、推理、寫程式特別強。</a>
+      </div>
+      <a class="service-cell c-chat" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Chat / LLM</div>
+        <div class="service-name">Gemini</div>
+        <div class="service-desc">整合 Google 生態、搜尋與多模態。</a>
+      </div>
+      <a class="service-cell c-chat" href="https://grok.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Chat / LLM</div>
+        <div class="service-name">Grok</div>
+        <div class="service-desc">即時資訊、X 整合、愛講真話。</a>
+      </div>
+
+      <a class="service-cell c-image" href="https://www.midjourney.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Image</div>
+        <div class="service-name">Midjourney</div>
+        <div class="service-desc">藝術級圖像生成，風格最多元。</a>
+      </div>
+      <a class="service-cell c-image" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Image</div>
+        <div class="service-name">Nano Banana</div>
+        <div class="service-desc">Google 出的超快編輯，改圖、合成一鍵搞定。</a>
+      </div>
+
+      <a class="service-cell c-video" href="https://sora.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Video</div>
+        <div class="service-name">Sora</div>
+        <div class="service-desc">OpenAI 影片生成，長鏡頭、真實感強。</a>
+      </div>
+      <a class="service-cell c-video" href="https://deepmind.google/models/veo/" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Video</div>
+        <div class="service-name">Veo</div>
+        <div class="service-desc">Google 高畫質影片生成。</a>
+      </div>
+      <a class="service-cell c-video" href="https://runwayml.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Video</div>
+        <div class="service-name">Runway</div>
+        <div class="service-desc">影片編輯、特效、去背、動態圖。</a>
+      </div>
+      <a class="service-cell c-video" href="https://higgsfield.ai" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Video</div>
+        <div class="service-name">Higgsfield</div>
+        <div class="service-desc">電影感鏡頭運動、創作者導向的影片生成。</a>
+      </div>
+
+      <a class="service-cell c-music" href="https://suno.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Music</div>
+        <div class="service-name">Suno</div>
+        <div class="service-desc">打字就能生一首完整的歌，含人聲。</a>
+      </div>
+      <a class="service-cell c-music" href="https://www.udio.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Music</div>
+        <div class="service-name">Udio</div>
+        <div class="service-desc">高品質音樂生成，風格混搭細緻。</a>
+      </div>
+
+      <a class="service-cell c-audio" href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Voice</div>
+        <div class="service-name">ElevenLabs</div>
+        <div class="service-desc">逼真的配音、語音克隆、多語言。</a>
+      </div>
+      <a class="service-cell c-audio" href="https://notebooklm.google.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Audio</div>
+        <div class="service-name">NotebookLM</div>
+        <div class="service-desc">把任何資料變成 podcast，讀書神器。</a>
+      </div>
+
+      <a class="service-cell c-code" href="https://cursor.com" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Code</div>
+        <div class="service-name">Cursor</div>
+        <div class="service-desc">AI-native 編輯器，寫程式效率翻倍。</a>
+      </div>
+      <a class="service-cell c-code" href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Code</div>
+        <div class="service-name">Claude Code</div>
+        <div class="service-desc">終端機裡的 agentic coding，改整個 repo。</a>
+      </div>
+      <a class="service-cell c-code" href="https://lovable.dev" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">No-code</div>
+        <div class="service-name">Lovable</div>
+        <div class="service-desc">一句話做一個完整網站或 app。</a>
+      </div>
+
+      <a class="service-cell c-design" href="https://www.figma.com/make/" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Design</div>
+        <div class="service-name">Figma Make</div>
+        <div class="service-desc">Figma 內建 AI，設計自動出 UI。</a>
+      </div>
+
+      <a class="service-cell c-research" href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Research</div>
+        <div class="service-name">Perplexity</div>
+        <div class="service-desc">有引用的 AI 搜尋，研究、查資料首選。</a>
+      </div>
+
+      <a class="service-cell c-agent" href="https://devin.ai" target="_blank" rel="noopener noreferrer">
+        <div class="service-cat">Agent</div>
+        <div class="service-name">Devin</div>
+        <div class="service-desc">自主完成整個任務的 AI software engineer。</a>
+      </div>
+    </div>
+
+    <p class="services-note">
+      這只是起點。你也可以提你用過、覺得好用的——補助不限品牌，組織買單。
+    </p>
+  </div>
+</section>
+
+<section class="closing reveal">
+  <div class="container">
+    <h2 class="closing-headline">
+      開心玩的人，<br><span class="gradient">才能真的學會。</span>
+    </h2>
+    <p class="closing-sub">
+      AI 更新速度很快<br>不用等準備好、不用等完美，真的很好玩。
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>Doublethink Lab</span>
+  <span>AI Teammate Program · 2026</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
