@@ -50,10 +50,10 @@ window.DTL_EN = [
   // ============ L1 DETAIL ============
   { sel: '#lv1 .ld-title', text: 'Explorer' },
   { sel: '#lv1 .ld-reward', text: 'Full tool reimbursement' },
-  { sel: '#lv1 .ld-intro', text: "Want to try an AI tool? Tell us. We'll pay for it — as long as it gets you started and actually using it." },
+  { sel: '#lv1 .ld-intro', text: "Want to try an AI tool? Tell us. We'll pay for it — as long as it gets you started and you actually use it." },
   { sel: '#lv1 .freedom-label', text: 'The point' },
   { sel: '#lv1 .freedom-title', text: 'Use it for whatever you want.' },
-  { sel: '#lv1 .freedom-body', text: "Up to three months of AI exploration — you use, we pay. Doesn't have to be work. Side projects, animations, novels, games, language learning, doing your taxes, planning trips, or sampling a bunch of tools at once? All good. We pay the bill. We believe: if you're willing to play, you'll actually learn to use it." },
+  { sel: '#lv1 .freedom-body', text: "Up to three months of AI exploration — you use, we pay. Doesn't have to be work. Side projects, animations, novels, games, language learning, doing your taxes, planning trips, or sampling a bunch of tools at once? All good. We pay the bill. We believe the best way to learn AI is to actually play with it and have fun doing it." },
   { sel: '#lv1 .freedom-tags .freedom-tag:nth-child(1)', text: 'games' },
   { sel: '#lv1 .freedom-tags .freedom-tag:nth-child(2)', text: 'videos' },
   { sel: '#lv1 .freedom-tags .freedom-tag:nth-child(3)', text: 'novels' },
@@ -67,7 +67,7 @@ window.DTL_EN = [
   { sel: '#lv1 .ld-field:nth-of-type(2) .ld-field-label', text: 'What we cover' },
   { sel: '#lv1 .ld-field:nth-of-type(2) .ld-field-body', html: 'Tool subscriptions, initially covered for <strong>1–3 months</strong> depending on your needs.' },
   { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-label', text: "Your part — a quick writeup" },
-  { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-body', html: 'Tell the team what you did, whether the tool is any good, and how to get the most out of it. Share both within your team and org-wide:<ul><li>what you used it for</li><li>what works, what doesn\'t</li><li>whether it\'s worth renewing</li><li>whether you\'d recommend it to colleagues</li></ul><div class="ld-note">Share before you apply for the next round! Let the budget actually do something.</div>' },
+  { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-body', html: 'Tell the team what you did, whether the tool is any good, and how to get the most out of it. Share both within your team and org-wide:<ul><li>what you used it for</li><li>what works, what doesn\'t</li><li>whether it\'s worth renewing</li><li>whether you\'d recommend it to colleagues</li></ul><div class="ld-note">Share before you apply for the next round — that way the budget actually creates value.</div>' },
 
   // ============ L2 DETAIL ============
   { sel: '#lv2 .ld-title', text: 'Contributor' },
@@ -241,5 +241,5 @@ window.DTL_EN = [
 
   // ============ CLOSING ============
   { sel: '.closing-headline', html: 'Play.<br><span class="gradient">That\'s how it starts.</span>' },
-  { sel: '.closing-sub', html: "Start now. Perfect later. — it's really fun." },
+  { sel: '.closing-sub', html: "Start now. Perfect later. It's genuinely fun." },
 ];
