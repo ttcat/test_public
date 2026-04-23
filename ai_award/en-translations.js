@@ -38,7 +38,7 @@ window.DTL_EN = [
 
   // ============ LEVELS OVERVIEW ============
   { sel: '#levels .section-title', html: 'Four stages.<br>Start wherever you want.' },
-  { sel: '#levels .section-sub', text: "No need to go in order. If you're already fluent with AI tools, jump straight to L2 or L3." },
+  { sel: '#levels .section-sub', text: "No need to go in order. To apply, just tell your manager. If you're already fluent with AI tools, jump straight to L2 or L3." },
   { sel: '.level-card.lv1 .lv-name', text: 'Explorer' },
   { sel: '.level-card.lv1 .lv-purpose', text: 'Just start using AI — for anything.' },
   { sel: '.level-card.lv1 .value', text: 'Full tool reimbursement' },
@@ -68,7 +68,7 @@ window.DTL_EN = [
   { sel: '#lv1 .freedom-tags .freedom-tag:nth-child(8)', text: 'songs' },
   { sel: '#lv1 .freedom-tags .freedom-tag:nth-child(9)', text: 'you name it' },
   { sel: '#lv1 .ld-field:nth-of-type(1) .ld-field-label', text: 'How to apply' },
-  { sel: '#lv1 .ld-field:nth-of-type(1) .ld-field-body', html: '1–3 sentences — which tool, what you want to do, how long. <strong>Does not have to be work-related.</strong>' },
+  { sel: '#lv1 .ld-field:nth-of-type(1) .ld-field-body', html: 'Just tell your manager — 1–3 sentences. Which tool, what you want to do, how long. <strong>Doesn\'t have to be work-related.</strong>' },
   { sel: '#lv1 .ld-field:nth-of-type(2) .ld-field-label', text: 'What we cover' },
   { sel: '#lv1 .ld-field:nth-of-type(2) .ld-field-body', html: 'Tool subscriptions, initially covered for <strong>1–3 months</strong> depending on your needs.' },
   { sel: '#lv1 .ld-field:nth-of-type(3) .ld-field-label', text: "Your part — share at our online meetings" },
@@ -79,8 +79,8 @@ window.DTL_EN = [
   { sel: '#lv2 .ld-intro', html: "<strong>L1 is you playing around.<br>L2 is turning what you figured out into something other people can reuse.</strong>" },
   { sel: '#lv2 .ld-field:nth-of-type(1) .ld-field-label', text: 'Any source counts' },
   { sel: '#lv2 .ld-field:nth-of-type(1) .ld-field-body', html: 'Prompt tricks or workflows you picked up while making games, editing video, or doing your taxes — as long as what you write up <strong>helps other DTL folks</strong>, it counts.<p style="color: var(--text-3); font-size: 13px; margin-top: 12px;">Example: you learned how to get a model to reliably output JSON while building a game → you write that up for researchers → totally counts.</p>' },
-  { sel: '#lv2 .ld-field:nth-of-type(2) .ld-field-label', text: 'Format · one plus one' },
-  { sel: '#lv2 .ld-field:nth-of-type(2) .ld-field-body', html: 'Org-wide online session plus:<br><br>tutorial doc · webpage or deck · video demo · case study article' },
+  { sel: '#lv2 .ld-field:nth-of-type(2) .ld-field-label', text: 'Format · talk + artifact' },
+  { sel: '#lv2 .ld-field:nth-of-type(2) .ld-field-body', html: 'Org-wide session, plus one of:<br><br>tutorial doc · webpage or deck · video demo · case study article' },
   { sel: '#lv2 .ld-field:nth-of-type(3) .ld-field-label', text: 'Must include' },
   { sel: '#lv2 .ld-field:nth-of-type(3) .ld-field-body', html: '<ol><li>the problem you were solving</li><li>tools and methods you used</li><li>actual results</li><li>limitations and caveats</li><li>concrete advice for teammates</li></ol>' },
   { sel: '#lv2 .ld-field:nth-of-type(4) .ld-field-label', text: 'Scoring · out of 10' },
@@ -127,7 +127,7 @@ window.DTL_EN = [
   { sel: '#lv4 .ld-field:nth-of-type(1) .ld-field-label', text: 'Criteria · most of the following' },
   { sel: '#lv4 .ld-field:nth-of-type(1) .ld-field-body', html: '<ul><li>Built an AI system adopted across teams or the whole org</li><li>Measurably raised overall efficiency</li><li>Pioneered new research methods, advocacy formats, or business models</li><li>Built sustainable long-term capability</li></ul>' },
   { sel: '#lv4 .ld-field:nth-of-type(2) .ld-field-label', text: 'Reward' },
-  { sel: '#lv4 .ld-field:nth-of-type(2) .ld-field-body', html: '<ul><li>Annual special bonus <strong>from NT$ 200,000</strong></li><li>Shoutout at the year-end all hands</li><li>Priority in promotion / development decisions</li><li>Career conversation</li></ul>' },
+  { sel: '#lv4 .ld-field:nth-of-type(2) .ld-field-body', html: '<ul><li>Annual special bonus <strong>from NT$ 200,000</strong></li><li>Shoutout at the year-end all hands</li><li>Priority for promotion and career growth</li><li>Career conversation</li></ul>' },
 
   // ============ REVIEW ============
   { sel: '#judges .section-title', text: "Who reviews?" },
@@ -142,7 +142,7 @@ window.DTL_EN = [
   { sel: '#culture .culture-col.yes .culture-col-label', text: 'Yes to these' },
   { sel: '#culture .culture-col.no .culture-col-label', text: "No thanks" },
   { sel: '#culture .culture-col.yes .culture-list li:nth-child(1)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Reinventing a better wheel is totally fine' },
-  { sel: '#culture .culture-col.yes .culture-list li:nth-child(2)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Self-directed learning, and sharing with others' },
+  { sel: '#culture .culture-col.yes .culture-list li:nth-child(2)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Self-directed learning and sharing' },
   { sel: '#culture .culture-col.yes .culture-list li:nth-child(3)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Got an idea? Just build it' },
   { sel: '#culture .culture-col.yes .culture-list li:nth-child(4)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Small things are good things too' },
   { sel: '#culture .culture-col.yes .culture-list li:nth-child(5)', html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>We want to hear about failures too' },
